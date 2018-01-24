@@ -5,6 +5,7 @@ using System.Collections;
 public class FPSCounter : MonoBehaviour
 {
     //https://gist.github.com/mstevenson/5103365
+    // full credit goes to the above, his code is slightly modified to work with my hud
     public Text text;
     float count;
     IEnumerator Start()
