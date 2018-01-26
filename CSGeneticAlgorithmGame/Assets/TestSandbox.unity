@@ -3068,7 +3068,7 @@ GameObject:
   - component: {fileID: 1176469982}
   - component: {fileID: 1176469981}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Hat Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3102,7 +3102,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a4003436f174b3e4ca7908804c12a99f, type: 2}
+  - {fileID: 2100000, guid: 6de1a1b102ff1244aa6fe417600d41fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3775,7 +3775,7 @@ GameObject:
   - component: {fileID: 1477294393}
   - component: {fileID: 1477294392}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Feather
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5087,7 +5087,7 @@ GameObject:
   - component: {fileID: 1856779132}
   - component: {fileID: 1856779131}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Hat Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5121,7 +5121,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a4003436f174b3e4ca7908804c12a99f, type: 2}
+  - {fileID: 2100000, guid: 6de1a1b102ff1244aa6fe417600d41fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
