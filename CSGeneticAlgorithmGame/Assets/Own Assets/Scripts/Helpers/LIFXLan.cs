@@ -170,6 +170,10 @@ public class LIFXLan // actual manager class
     public static bool ChangeColour(string hex, int time, params LIFXBulb[] targets) // actual broadcast method
     {
         LIFXBulb[] actualTargets; // creates a list of actual targets
+        if (targets == null) // in case the function is accessed without initialisation (i.e. the lighting menu hasn't been done yet)
+        {
+            return false;
+        }
         if (targets.Length == 0) // if params is empty
         {
             actualTargets = Cached; // use cached bulbs
