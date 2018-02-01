@@ -2,34 +2,35 @@
 using System.Threading;
 using System.Linq;
 
+// note that this acts as the main terrain generator
 public class MazeMesh : MonoBehaviour
 {
-    public int MeshScale = 10;
-    public int Octaves = 3;
-    public int MazeSize = 21;
-    public int StoneCount = 250;
-    public GameObject Stone;
-    public int TreeCount = 100;
-    public GameObject Tree;
+    public int MeshScale = 10; // scale of mesh
+    public int Octaves = 3; // octaves for variation
+    public int MazeSize = 21; // size of the maze nodes
+    public int StoneCount = 250; // number of stones to create
+    public GameObject Stone; // object of a stone
+    public int TreeCount = 100; // number of trees to create
+    public GameObject Tree; // tree prefab
 
-    float[,] map = { };
-    MazeGenerator generator;
-    System.Random prng;
+    float[,] map = { }; // generated heightmap
+    MazeGenerator generator; // maze generator
+    System.Random prng; // random seed
     
     void Start()
     {
-        prng = new System.Random();
-        Debug.Log("DEBUG: Generating maze heightmap");
-        GenerateMap();
+        prng = new System.Random(); // initialise random
+        Debug.Log("DEBUG: Generating maze heightmap"); // debugging
+        GenerateMap(); // create height map
         Debug.Log("DEBUG: Generating maze mesh");
-        CreateMesh();
+        CreateMesh(); // create the mesh
         Debug.Log("DEBUG: Populating environment with stones");
-        PopulateStones();
+        PopulateStones(); // create stones
         Debug.Log("DEBUG: Populating environment with dead trees");
-        PopulateDeadTrees();
+        PopulateDeadTrees(); // create trees
         Debug.Log("DEBUG: Terrain generation complete");
     }
-    public void PopulateDeadTrees()
+    public void PopulateDeadTrees() // 
     {
         float[] offset = { (map.GetLength(0) - 1) / -2f, (map.GetLength(1) - 1) / 2f };
         for (int i = 0; i < TreeCount; i++)
