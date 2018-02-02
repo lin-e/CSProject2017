@@ -6,42 +6,44 @@ using System;
 
 using System.Diagnostics;
 
+// tree generation function
 public class TreeGenerator : MonoBehaviour
 {
-    public float BranchChance = 0.3f;
-    public int InitialLength = 6;
-    public float UpwardsBias = 0.25f;
-    public bool DebugMode = false;
+    public float BranchChance = 0.3f; // the probability that it will spawn a branch
+    public int InitialLength = 6; // the length of the master trunk
+    public float UpwardsBias = 0.25f; // the bias for it to go upward (hence branches will point up)
+    public bool DebugMode = false; // debugging will allow me to regenerate the trees with a key
 
-    PolyhedronBuilder builder;
-    MeshFilter filter;
-    MeshCollider collider;
-    System.Random prng;
-    Mesh m;
-    public void Start()
+    PolyhedronBuilder builder; // the custom polyhedron builder allows me to use cinema4d style method to build the tree (useful because i have some experience with C4D)
+    MeshFilter filter; // the actual mesh filter
+    MeshCollider collider; // the collider
+    System.Random prng; // the random generator
+    Mesh m; // mesh to edit
+    public void Start() // runs at the object creation
     {
-        Generate(new System.Random());
+        Generate(new System.Random()); // create with new random
     }
-    public void StartGenerate()
+    public void StartGenerate() // start generation (manually)
     {
-        Generate(null);
+        Generate(null); // generate without creating a new random
     }
-    void Update()
+    void Update() // runs on update, only for debugging
     {
         if (DebugMode)
         {
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.T)) // if t is pressed
             {
-                UnityEngine.Debug.ClearDeveloperConsole();
-                StartGenerate();
-                Apply();
+                UnityEngine.Debug.ClearDeveloperConsole(); // clear the console
+                StartGenerate(); // generate
+                Apply(); // apply
             }
         }
     }
-    void FixedUpdate()
+    void FixedUpdate() // runs on physics update
     {
-        if (DebugMode)
+        if (DebugMode) // only if in debug mode
         {
+            // rotate based on direction pressed
             if (Input.GetKey(KeyCode.LeftArrow))
             {
                 transform.Rotate(new Vector3(0, 2, 0));
@@ -52,7 +54,7 @@ public class TreeGenerator : MonoBehaviour
             }
         }
     }
-    public void AddBranch(BranchExtrusion branch)
+    public void AddBranch(BranchExtrusion branch) // add branch
     {
         List<BranchExtrusion> be = new List<BranchExtrusion>();
         float currentWidth = branch.Scale;
@@ -140,10 +142,10 @@ public class TreeGenerator : MonoBehaviour
         AddBranch(new BranchExtrusion(builder.Polygon(0), t, currentWidth));
         m = builder.Generate();
     }
-    public void Apply()
+    public void Apply() // apply all the meshes
     {
-        filter.mesh = m;
+        filter.mesh = m; // set filters
         filter.sharedMesh = m;
-        collider.sharedMesh = m;
+        collider.sharedMesh = m; // set collider
     }
 }
