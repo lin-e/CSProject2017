@@ -4,10 +4,10 @@ using System;
 
 public class PolyhedronBuilder
 {
-    public List<int> Triangles;
-    public List<Vector3> Vertices;
-    public List<BuilderPolygon> Polygons;
-    public PolyhedronBuilder()
+    public List<int> Triangles; // list of all triangles
+    public List<Vector3> Vertices; // list of all vertices
+    public List<BuilderPolygon> Polygons; // list of all polygons
+    public PolyhedronBuilder() // constructor initialises all lists
     {
         Triangles = new List<int>();
         Vertices = new List<Vector3>();
@@ -15,33 +15,33 @@ public class PolyhedronBuilder
     }
     public void AddQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d) // clockwise; top left is a, top right is b, bottom right is c, bottom left is d
     {
-        AddPolygon(a, b, c, d);
+        AddPolygon(a, b, c, d); // adds a polygon with the 4 points
     }
-    public void AddPolygon(params Vector3[] v)
+    public void AddPolygon(params Vector3[] v) // creates a polygon with n verts
     {
-        Vertices.AddRange(v);
-        for (int i = 0; i < v.Length - 2; i++)
+        Vertices.AddRange(v); // adds the params to the list
+        for (int i = 0; i < v.Length - 2; i++) // iterates through the polygons to create the verticies
         {
             Triangles.Add(Vertices.Count - v.Length);
             Triangles.Add(Vertices.Count - (i + 1));
             Triangles.Add(Vertices.Count - (i + 2));
         }
-        Polygons.Add(new BuilderPolygon(this, v));
+        Polygons.Add(new BuilderPolygon(this, v)); // adds polygon to list
     }
-    public Mesh Generate()
+    public Mesh Generate() // generates the actual mesh
     {
-        Mesh m = new Mesh();
+        Mesh m = new Mesh(); // the code below is quite self-explanatory, converts from lists to array, and calculates render normals and bounds
         m.vertices = Vertices.ToArray();
         m.triangles = Triangles.ToArray();
         m.RecalculateBounds();
         m.RecalculateNormals();
         return m;
     }
-    public BuilderPolygon LastPolygon()
+    public BuilderPolygon LastPolygon() // literally just gets the last polygon from the list
     {
         return Polygons[Polygons.Count - 1];
     }
-    public BuilderPolygon Polygon(int i)
+    public BuilderPolygon Polygon(int i) // gets the (i + 1)th polygon from the list
     {
         return Polygons[i];
     }
@@ -52,95 +52,88 @@ public class BuilderPolygon
     public Vector3 Normal;
     PolyhedronBuilder parent;
     public int Index;
-    public BuilderPolygon(PolyhedronBuilder p, params Vector3[] v)
+    public BuilderPolygon(PolyhedronBuilder p, params Vector3[] v) // creates the polygon with given params
     {
         parent = p;
         Vertices = v;
-        Index = parent.Triangles.Count - getTriangleCount();
-        Normal = v.Normal();
+        Index = parent.Triangles.Count - getTriangleCount(); // calculate the index (for when something needs to be removed)
+        Normal = v.Normal(); // get normal of a vector array
     }
-    public void Remove()
+    public void Remove() // remove the polygon from the builder
     {
-        int tCount = getTriangleCount();
-        parent.Triangles.RemoveRange(Index, tCount);
-        foreach (BuilderPolygon p in parent.Polygons)
+        int tCount = getTriangleCount(); // get the triangle count
+        parent.Triangles.RemoveRange(Index, tCount); // remove the given triangles from the builder's list
+        foreach (BuilderPolygon p in parent.Polygons) // iterates through each polygon in the parent
         {
-            if (p.Index > Index)
+            if (p.Index > Index) // if the index is after this polygon's index
             {
-                p.Index -= tCount;
+                p.Index -= tCount; // reduce the index by the triangle count
             }
         }
     }
-    public void Extrude(Vector3 offset)
+    public void Extrude(Vector3 offset) // extrude the polygon by the given offset
     {
-        Vector3[] newVertices = ExtrudeRaw(offset);
-        Extrude(newVertices);
+        Vector3[] newVertices = ExtrudeRaw(offset); // calculate the extrusion
+        Extrude(newVertices); // extrude by the offset
     }
-    public void Extrude(Vector3[] newPoints)
+    public void Extrude(Vector3[] newPoints) // extrude when given raw points
     {
-        if (newPoints.Length != Vertices.Length)
+        if (newPoints.Length != Vertices.Length) // if the points are mismatched
         {
             return;
         }
         Remove(); //breaks a lot when theres more than one removal.
-        for (int i = 0; i < Vertices.Length; i++)
+        for (int i = 0; i < Vertices.Length; i++) // iterates through each vertex
         {
-            Vector3 a = newPoints[i];
-            Vector3 b = Vertices[i];
-            int nextPoint = i + 1;
-            if (nextPoint == Vertices.Length)
-            {
-                nextPoint = 0;
-            }
-            Vector3 c = Vertices[nextPoint];
+            Vector3 a = newPoints[i]; // takes the point from the extrusion
+            Vector3 b = Vertices[i]; // with the corresponding point on the base shape
+            int nextPoint = (i + 1) % Vertices.Length; // takes the next two points (using modulo to wrap around)
+            Vector3 c = Vertices[nextPoint]; // does the same as above
             Vector3 d = newPoints[nextPoint];
-            parent.AddQuad(a, b, c, d);
+            parent.AddQuad(a, b, c, d); // creates a new quad with the given points
         }
-        parent.AddPolygon(newPoints);
+        parent.AddPolygon(newPoints); // create a polygon with the raw extruded points
     }
-    public Vector3[] ExtrudeRaw(Vector3 offset)
+    public Vector3[] ExtrudeRaw(Vector3 offset) // calculate the extrusion points
     {
-        List<Vector3> newVerts = new List<Vector3>();
-        foreach (Vector3 v in Vertices)
+        List<Vector3> newVerts = new List<Vector3>(); // create a list of new vertices
+        foreach (Vector3 v in Vertices) // iterates through each existing vertex
         {
-            newVerts.Add(v + offset);
+            newVerts.Add(v + offset); // add the offset to the existing vertex
         }
-        return newVerts.ToArray();
+        return newVerts.ToArray(); // returns the new points as an array
     }
     int getTriangleCount()
     {
-        return (Vertices.Length - 2) * 3;
+        return (Vertices.Length - 2) * 3; // simple formula for calculating the number of triangles
     }
 }
 public static class PolyhedronExtensions
 {
-    public static bool useQuaternion = false;
-    public static Vector3 Normal(this Vector3[] v)
+    public static bool useQuaternion = false; // toggle for whether to use the quaternion mode or to use my matrix solving mode
+    public static Vector3 Normal(this Vector3[] v) // commonly used formula for calculating the normal of a triangle based on cross product
     {
         return (Vector3.Cross((v[3] - v[0]), (v[1] - v[0]))).normalized;
     }
-    public static Vector3[] QuadScale(this Vector3[] v, float factor, Vector3 centre)
+    public static Vector3[] Scale(this Vector3[] v, float factor, Vector3 centre) // scaling method for quads
     {
-        if (v.Length != 4)
+        List<Vector3> ret = new List<Vector3>(); // the return value
+        foreach (Vector3 vert in v) // iterates through each point
         {
-            return v;
-        }
-        List<Vector3> ret = new List<Vector3>();
-        foreach (Vector3 vert in v)
-        {
-            float dX = vert.x - centre.x;
+            float dX = vert.x - centre.x; // translate to be relative to the centre
             float dY = vert.y - centre.y;
             float dZ = vert.z - centre.z;
-            ret.Add(new Vector3(centre.x + (dX * factor), centre.y + (dY * factor), centre.z + (dZ * factor)));
+            ret.Add(new Vector3(centre.x + (dX * factor), centre.y + (dY * factor), centre.z + (dZ * factor))); // does the scaling, then translates back
         }
-        return ret.ToArray();
+        return ret.ToArray(); // converts to array and returns
     }
-    public static Vector3[] QuadScale(this Vector3[] v, float factor)
+    public static Vector3[] QuadScale(this Vector3[] v, float factor) // simpler method
     {
-        return v.QuadScale(factor, v.QuadMidpoint());
+        return v.Scale(factor, v.QuadMidpoint()); // scale the quad by the factor and automatically finds the midpoint
     }
-    public static Vector3 Rotate(this Vector3 v, float x, float y, float z, Vector3 centre)
+    public static Vector3 Rotate(this Vector3 v, float x, float y, float z, Vector3 centre) // rotate a point around a given origin
     {
+        // this uses the standard rotation matrices taught in further mathematics, it was quicker to manually implement than to use a maths library
         float rX = x * Mathf.Deg2Rad;
         float rY = y * Mathf.Deg2Rad;
         float rZ = z * Mathf.Deg2Rad;
@@ -175,33 +168,34 @@ public static class PolyhedronExtensions
 
         return translated;
     }
-    public static Vector3[] QuadRotate(this Vector3[] v, float x, float y, float z, Vector3 centre)
+    public static Vector3[] QuadRotate(this Vector3[] v, float x, float y, float z, Vector3 centre) // rotates a quad around a given centre
     {
-        if (v.Length != 4)
+        if (v.Length != 4) // only does the operation if it is a quad
         {
             return v;
         }
-        Vector3[] rotated = new Vector3[4];
-        for (int i = 0; i < 4; i++)
+        Vector3[] rotated = new Vector3[4]; // creates an array to hold the rotated vectors
+        for (int i = 0; i < 4; i++) // iterates through each point
         {
-            rotated[i] = v[i].Rotate(x, y, z, centre);
+            rotated[i] = v[i].Rotate(x, y, z, centre); // rotates by the given amount
         }
-        return rotated;
+        return rotated; // return the rotated points
     }
     public static Vector3[] QuadRotate(this Vector3[] v, float x, float y, float z) // do this all in degrees because its easier
     {
-        return v.QuadRotate(x, y, z, v.QuadMidpoint());
+        return v.QuadRotate(x, y, z, v.QuadMidpoint()); // does what the function name states, but uses the calculated point
     }
-    public static float NextFloat(this System.Random rng, float min, float max)
+    public static float NextFloat(this System.Random rng, float min, float max) // calculates a random float with min max
     {
-        return Mathf.Lerp(min, max, (float)rng.NextDouble());
+        return Mathf.Lerp(min, max, (float)rng.NextDouble()); // uses lerp to go between the range
     }
-    public static Vector3 QuadMidpoint(this Vector3[] v)
+    public static Vector3 QuadMidpoint(this Vector3[] v) // calculates the midpoint of a given vector set
     {
-        if (v.Length != 4)
+        if (v.Length != 4) // only used for quads
         {
             return new Vector3(0, 0, 0);
         }
+        // really simple implementation finding the mean of all the points, sort of like finding the centre of mass with the vertices being masses on a plane
         float mX = 0;
         float mY = 0;
         float mZ = 0;
@@ -216,8 +210,9 @@ public static class PolyhedronExtensions
         mZ = mZ / 4f;
         return new Vector3(mX, mY, mZ);
     }
-    public static Vector3 RotateTo(this Vector3 initialVector, Vector3 desiredVector)
+    public static Vector3 RotateTo(this Vector3 initialVector, Vector3 desiredVector) // calculate the rotation between two vectors
     {
+        // has two seperate methods
         if (useQuaternion)
         {
             return initialVector.RotateToQuaternion(desiredVector);
@@ -247,9 +242,9 @@ public static class PolyhedronExtensions
         }
         return Convert.ToInt16((Mathf.Abs(k) / k)); // divide the absolute by the actual and round
     }
-    // my implementation based on solving matrices as simultaneous equations (check documentation for full explanation)
     static Vector3 RotateToMatrix(this Vector3 initialVector, Vector3 desiredVector)
     {
+        // my implementation based on solving matrices as simultaneous equations (check documentation for full explanation)
         Vector3 u = initialVector;
         Vector3 v = desiredVector;
         if (u.x == v.x && u.y == v.y && u.z == v.z)
@@ -293,6 +288,7 @@ public static class PolyhedronExtensions
     }
     public static float TrigSolutionOverlap(float s1, float s2, float c1, float c2, Vector3 u, Vector3 v, int accuracy = 4)
     {
+        // the code below just forces everything into the [0, 2pi] range
         float[] s = { s1, s2 };
         if (s[0] < 0)
         {
@@ -311,6 +307,7 @@ public static class PolyhedronExtensions
         {
             c[1] += Mathf.PI * 2;
         }
+        // check for solution overlaps, with some tolerance as floating point math can be slightly inaccurate
         foreach (float sin in s)
         {
             foreach (float cos in c)

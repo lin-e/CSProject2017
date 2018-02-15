@@ -1,76 +1,75 @@
 ﻿public class TreeData
 {
-    public TreeNode BaseNode;
-    System.Random prng;
+    public TreeNode BaseNode; // stores the base of the tree
+    System.Random prng; // random generator for the tree
     public TreeData(float bChance, int baseLength, System.Random prng)
     {
-        this.prng = prng;
-        BaseNode = new TreeNode();
-        GenerateBranch(BaseNode, baseLength, bChance, false);
+        this.prng = prng; // uses this because i'm not creative with variable names
+        BaseNode = new TreeNode(); // creates new tree node
+        GenerateBranch(BaseNode, baseLength, bChance, false); // generates a branch with the given statistics
     }
-    void GenerateBranch(TreeNode parent, int length, float branchChance, bool isBranch)
+    void GenerateBranch(TreeNode parent, int length, float branchChance, bool isBranch) // recursive node generator
     {
-        if (length < 1)
+        if (length < 1) // if the length is zero (hopefully i didn't actually mess up and allow for negative branch lengths)
         {
-            return;
+            return; // don't continue generation (exit case)
         }
-        TreeNode currentParent = parent;
-        bool justBranched = false;
-        bool shouldBranch = isBranch;
-        for (int i = 0; i < length; i++)
+        TreeNode currentParent = parent; // create parent
+        bool justBranched = false; // mark just branched as false
+        bool shouldBranch = isBranch; // keep branching if it's a branch
+        for (int i = 0; i < length; i++) // iterates through tree length
         {
-            TreeNode newNode = new TreeNode();
-            if (shouldBranch)
+            TreeNode newNode = new TreeNode(); // create a new node
+            if (shouldBranch) // if it's a branch
             {
-                currentParent.Branch = newNode;
+                currentParent.Branch = newNode; // mark the parent's branch with the new node
             }
             else
             {
-                currentParent.Up = newNode;
+                currentParent.Up = newNode; // go up
             }
-            shouldBranch = false;
-            currentParent = newNode;
-            if (!justBranched && i != 0 && i != length - 1 && prng.NextFloat(0, 1) <= branchChance) // dont generate a branch on the first segment because thats stupid, and the last one?
+            shouldBranch = false; // stop branching
+            currentParent = newNode; // mark the current parent as the newly generated node
+            if (!justBranched && i != 0 && i != length - 1 && prng.NextFloat(0, 1) <= branchChance) // dont generate a branch on the first or last segment
             {
-                justBranched = true;
-                GenerateBranch(newNode, length - (i + 2), branchChance * 0.66f, true);
+                justBranched = true; // mark as just branched
+                GenerateBranch(newNode, length - (i + 2), branchChance * 0.66f, true); // create branch
             }
             else
             {
-                justBranched = false;
+                justBranched = false; // reset flag
             }
         }
     }
 }
-public class TreeNode
+public class TreeNode // node to hold branch info
 {
-    public TreeNode Up;
-    public TreeNode Branch;
-    public TreeNode()
+    public TreeNode Up; // node that is directly above
+    public TreeNode Branch; // node that is adjacent
+    public TreeNode() // constructor marks both as null
     {
         Up = null;
         Branch = null;
     }
-    public int ChildrenCount()
+    public int ChildrenCount() // number of children
     {
-        int c = 0;
-        if (Up != null)
+        int c = 0; // initial count
+        foreach (TreeNode t in new TreeNode[] { Up, Branch }) // more elegant solution in case i wanted to add more branches
         {
-            c++;
+            if (t != null) // if it exists
+            {
+                c++; // increment child count by 1
+            }
         }
-        if (Branch != null)
-        {
-            c++;
-        }
-        return c;
+        return c; // return the count
     }
 }
-public class BranchExtrusion
+public class BranchExtrusion // branch extrusion data
 {
-    public BuilderPolygon Polygon;
-    public TreeNode Node;
-    public float Scale;
-    public BranchExtrusion(BuilderPolygon p, TreeNode t, float s)
+    public BuilderPolygon Polygon; // holds the polygon
+    public TreeNode Node; // holds the corresponding node
+    public float Scale; // holds the scale
+    public BranchExtrusion(BuilderPolygon p, TreeNode t, float s) // simple constructor
     {
         Polygon = p;
         Node = t;
