@@ -8,12 +8,6 @@ public class RockGenerator : MonoBehaviour
     float[,] map;
     public void GenerateMap(System.Random prng)
     {
-        // NOTE TO SELF: DOCUMENT THIS PROPERLY
-        /*
-
-        if we consider the shape of the rock, we can use a reciprocal graph to model one profile, and then have that rotated around the y axis in 3d to create a 3d shape in a 
-
-        */
         map = new float[Size, Size]; // create a n x n grid of vertices
         for (int y = 0; y < Size; y++) // iterate through each point
         {

@@ -51,6 +51,14 @@ public class TreeGenerator : MonoBehaviour
             {
                 transform.Rotate(new Vector3(0, -2, 0));
             }
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                transform.Rotate(new Vector3(2, 0, 0));
+            }
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                transform.Rotate(new Vector3(-2, 0, 0));
+            }
         }
     }
     public void AddBranch(BranchExtrusion branch) // recursively add branches

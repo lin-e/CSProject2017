@@ -37,7 +37,7 @@ MonoBehaviour:
       taaSettings:
         jitterSpread: 0.75
         sharpen: 0
-        stationaryBlending: 0.102
+        stationaryBlending: 0.743
         motionBlending: 0.85
   ambientOcclusion:
     m_Enabled: 1

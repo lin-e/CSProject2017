@@ -232,7 +232,7 @@ public static class PolyhedronExtensions
         q.y = a.y;
         q.z = a.z;
         q.w = Mathf.Sqrt(u.sqrMagnitude * v.sqrMagnitude) + Vector3.Dot(u, v); // set w component
-        return q.eulerAngles; // return the euler angles for the quaternion
+        return q.eulerAngles; // return he euler angles for the quaternion
     }
     static int GetSign(this float k) // literally gets the sign of the number
     {
@@ -245,43 +245,53 @@ public static class PolyhedronExtensions
     static Vector3 RotateToMatrix(this Vector3 initialVector, Vector3 desiredVector)
     {
         // my implementation based on solving matrices as simultaneous equations (check documentation for full explanation)
-        Vector3 u = initialVector;
-        Vector3 v = desiredVector;
+        Vector3 u = initialVector.normalized; // normalise both u and v
+        Vector3 v = desiredVector.normalized;
         if (u.x == v.x && u.y == v.y && u.z == v.z)
         {
             return new Vector3(0, 0, 0);
         }
+
         float x = 0;
-        float xCos01 = Mathf.Acos(((v.y * u.y) + (v.z * u.z)) / (Mathf.Pow(u.y, 2) + Mathf.Pow(u.z, 2)));
-        float xCos02 = (Mathf.PI * 2) - xCos01;
-        float xSin01 = Mathf.Asin(((v.z * u.y) - (v.y * u.z)) / (Mathf.Pow(u.y, 2) + Mathf.Pow(u.z, 2)));
-        float xSin02 = Mathf.PI - xSin01;
-        x = TrigSolutionOverlap(xSin01, xSin02, xCos01, xCos02, u, v);
         if (u.x == -v.x && u.x != 0)
         {
             x = -Mathf.PI;
         }
+        else
+        {
+            float xCos01 = Mathf.Acos(((v.y * u.y) + (v.z * u.z)) / (Mathf.Pow(u.y, 2) + Mathf.Pow(u.z, 2)));
+            float xCos02 = (Mathf.PI * 2) - xCos01;
+            float xSin01 = Mathf.Asin(((v.z * u.y) - (v.y * u.z)) / (Mathf.Pow(u.y, 2) + Mathf.Pow(u.z, 2)));
+            float xSin02 = Mathf.PI - xSin01;
+            x = TrigSolutionOverlap(xSin01, xSin02, xCos01, xCos02, u, v);
+        }
 
         float y = 0;
-        float yCos01 = Mathf.Acos(((v.x * u.x) + (v.z * u.z)) / (Mathf.Pow(u.x, 2) + Mathf.Pow(u.z, 2)));
-        float yCos02 = (Mathf.PI * 2) - yCos01;
-        float ySin01 = Mathf.Asin(((v.x * u.z) - (v.z * u.x)) / (Mathf.Pow(u.z, 2) + Mathf.Pow(u.x, 2)));
-        float ySin02 = Mathf.PI - ySin01;
-        y = TrigSolutionOverlap(ySin01, ySin02, yCos01, yCos02, u, v);
         if (u.y == -v.y && u.y != 0)
         {
             y = -Mathf.PI;
         }
+        else
+        {
+            float yCos01 = Mathf.Acos(((v.x * u.x) + (v.z * u.z)) / (Mathf.Pow(u.x, 2) + Mathf.Pow(u.z, 2)));
+            float yCos02 = (Mathf.PI * 2) - yCos01;
+            float ySin01 = Mathf.Asin(((v.x * u.z) - (v.z * u.x)) / (Mathf.Pow(u.z, 2) + Mathf.Pow(u.x, 2)));
+            float ySin02 = Mathf.PI - ySin01;
+            y = TrigSolutionOverlap(ySin01, ySin02, yCos01, yCos02, u, v);
+        }
 
         float z = 0;
-        float zCos01 = Mathf.Acos(((v.x * u.x) + (v.y * u.y)) / (Mathf.Pow(u.x, 2) + Mathf.Pow(u.y, 2)));
-        float zCos02 = (Mathf.PI * 2) - zCos01;
-        float zSin01 = Mathf.Asin(((v.y * u.x) - (v.x * u.y)) / (Mathf.Pow(u.x, 2) + Mathf.Pow(u.y, 2)));
-        float zSin02 = Mathf.PI - zSin01;
-        z = TrigSolutionOverlap(zSin01, zSin02, zCos01, zCos02, u, v);
         if (u.z == -v.z && u.z != 0)
         {
             z = -Mathf.PI;
+        }
+        else
+        {
+            float zCos01 = Mathf.Acos(((v.x * u.x) + (v.y * u.y)) / (Mathf.Pow(u.x, 2) + Mathf.Pow(u.y, 2)));
+            float zCos02 = (Mathf.PI * 2) - zCos01;
+            float zSin01 = Mathf.Asin(((v.y * u.x) - (v.x * u.y)) / (Mathf.Pow(u.x, 2) + Mathf.Pow(u.y, 2)));
+            float zSin02 = Mathf.PI - zSin01;
+            z = TrigSolutionOverlap(zSin01, zSin02, zCos01, zCos02, u, v);
         }
 
         return new Vector3(x * Mathf.Rad2Deg, y * Mathf.Rad2Deg, z * Mathf.Rad2Deg);
