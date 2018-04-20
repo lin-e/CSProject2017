@@ -1,4 +1,9 @@
 ###
+# Sensitive data
+###
+Website/assets/includes/secret.php
+
+###
 # Unity folders and files
 ###
 [Aa]ssets/AssetStoreTools*
