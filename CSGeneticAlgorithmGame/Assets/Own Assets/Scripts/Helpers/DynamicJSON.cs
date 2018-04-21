@@ -14,7 +14,7 @@ public class DynamicJson
     {
         JavaScriptSerializer mainSerializer = new JavaScriptSerializer();
         mainSerializer.RegisterConverters(new[] { new DynamicJsonConverter() });
-        return mainSerializer.Deserialize(inputString, typeof(object));
+        return mainSerializer.Deserialize<dynamic>(inputString);
     }
 }
 public sealed class DynamicJsonConverter : JavaScriptConverter
