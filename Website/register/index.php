@@ -19,7 +19,6 @@
       function callback() { // empty function for reCAPTCHA to callback
       }
       function register() {
-        grecaptcha.execute(); // execute captcha check
         var captcha_data = grecaptcha.getResponse(); // get captcha response
         if ($('#password').val() == "" || $('#username').val() == "" || $('#password_confirm').val() == "") { // check no fields are empty
           Materialize.toast("Please complete all fields!"); // tell user to complete all fields
