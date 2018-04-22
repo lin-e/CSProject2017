@@ -1,13 +1,12 @@
 <?php
-  include('../assets/include/config.php');
+  include('../assets/includes/config.php');
 ?>
 <html>
   <head>
     <noscript>
       <meta HTTP-EQUIV="REFRESH" content="0; url=https://eugenel.in/noscript">
     </noscript>
-    <title>Lorem - <?php echo $site_title; ?></title>
-    <link rel="shortcut icon" href="../assets/favicon.ico">
+    <title>Register - <?php echo $site_title; ?></title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../assets/css/materialize.css?<?php if ($reload_assets) { echo time(); } ?>"  media="screen,projection">
     <link type="text/css" rel="stylesheet" href="../assets/css/main.css?<?php if ($reload_assets) { echo time(); } ?>">
@@ -80,32 +79,10 @@
       <input type="range" class="red" id="test5" min="0" max="255" />
     </p>
       <div class="container">
-        <h4>Lorem ipsum</h4>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facilisis, arcu quis scelerisque consectetur, odio mauris tincidunt est, tempus ultrices metus justo quis sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer iaculis semper sem, nec viverra neque. Cras condimentum lectus magna, et fringilla nisi dignissim ac. Phasellus in lacus mi. Vivamus ornare iaculis ultrices. Quisque sodales purus nec arcu volutpat, at sagittis purus bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Vivamus varius, sapien quis viverra aliquet, magna nulla faucibus lectus, in molestie ligula tellus dapibus mauris. Nulla ac iaculis neque. Quisque metus libero, condimentum vel mi quis, condimentum porttitor sapien.</p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Ut mattis luctus sollicitudin. Phasellus rutrum enim non ullamcorper rutrum. Integer at nulla nec magna porttitor bibendum. Nulla vehicula risus ultricies orci aliquam pharetra. Donec pulvinar consequat quam, molestie tincidunt mi euismod nec.</p>
-        <div class="divider"></div>
-        <h4>Sed ullamcorper</h4>
-        <h5>Phasellus gravida</h5>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Phasellus ac consequat eros, ut aliquam ipsum. Maecenas et mi sapien. Duis metus augue, vestibulum nec tortor quis, commodo imperdiet nisi. Mauris et lorem nec ipsum gravida laoreet in ac nulla. Fusce pulvinar elementum eros quis aliquet. Aliquam egestas laoreet mi non auctor. Proin aliquam tellus non diam sodales, id vestibulum purus laoreet. Vivamus tempus tempor purus ut pellentesque. Aenean iaculis turpis eget eros lacinia imperdiet. Nam sem ligula, consectetur ac felis et, euismod convallis sem. Nulla accumsan augue at sodales vulputate. Duis pretium magna eget felis congue blandit. In nec lorem libero.</p>
-        <blockquote>
-          <span>&nbsp;&nbsp;&nbsp;&nbsp;Cras ultricies sapien et iaculis hendrerit. Aliquam imperdiet turpis eu sollicitudin fringilla. Nunc pellentesque ex at augue elementum consequat. Nulla mollis nisi orci, in eleifend mi scelerisque fringilla. Aenean pharetra metus ac justo porttitor, non sagittis ex cursus. Nunc facilisis neque ultrices nisi vestibulum, ac volutpat urna congue. Donec molestie sapien sed nibh mattis, eget egestas dolor mollis. Donec a purus tellus.</span>
-        </blockquote>
-        <blockquote>
-          <span>&nbsp;&nbsp;&nbsp;&nbsp;Nulla porttitor consectetur magna, at ullamcorper nisl gravida quis. Fusce vitae convallis ex. Sed faucibus magna sed diam faucibus, et porta dolor porta. Fusce luctus molestie tortor sit amet gravida. Aliquam pharetra porta mi, at tincidunt nisl consequat quis. Maecenas ut augue maximus, fermentum ante vitae, imperdiet orci. Quisque pharetra in velit ac faucibus. Nulla interdum fringilla neque sed imperdiet. Duis egestas sodales varius.</span>
-        </blockquote>
-        <h5>Morbi non nulla</h5>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Morbi nec libero eget velit ullamcorper laoreet quis in enim. Fusce tincidunt elit tristique dui eleifend, ut pellentesque metus lacinia. Fusce non sem mattis, luctus justo convallis, bibendum quam. Cras eget consectetur velit. Vivamus blandit, nulla eu hendrerit porta, massa ipsum laoreet orci, eu rhoncus risus quam molestie ex. Nullam congue laoreet dolor, sed vehicula mi finibus vel.</p>
-        <div class="divider"></div>
-        <h4>Fusce at rhoncus purus</h4>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Aenean nec nibh eget enim rutrum aliquam. Aliquam maximus turpis sed purus malesuada, ac faucibus felis sodales. Vivamus est turpis, semper eget mauris non, auctor mollis dui. Aliquam mollis, metus ut vestibulum rhoncus, metus justo mollis felis, at lacinia enim enim a elit. Morbi vitae risus semper, placerat quam ut, ornare turpis. Phasellus rhoncus convallis fringilla. In massa est, dapibus sit amet massa vel, cursus varius magna. In non convallis purus, vitae lacinia justo. Vestibulum purus nisi, porttitor ut posuere a, pharetra sit amet lorem. Fusce hendrerit at ligula eu ornare.</p>
-        <h5>Praesent magna quam</h5>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Aenean consectetur interdum lacus scelerisque varius. Nullam quis auctor mi. Phasellus non turpis a leo tristique varius vitae vitae erat. Maecenas euismod semper enim eu ullamcorper. In auctor, tortor nec hendrerit convallis, elit eros pellentesque augue, nec pretium neque ligula ac sapien. Phasellus ultrices, nulla lobortis volutpat cursus, nibh risus imperdiet velit, non consequat sem turpis et massa.</p>
-        <h5>Donec venenatis</h5>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;Phasellus eu velit augue. Nunc dignissim vehicula magna, vitae dictum velit luctus at. Morbi accumsan nulla arcu, et iaculis leo porttitor nec. Proin magna mauris, tincidunt eget pharetra sit amet, pretium ac sem. Donec et fringilla purus, a elementum lorem. Donec luctus, quam eget iaculis rhoncus, diam mauris accumsan libero, sed ultrices purus ante ac nibh. Ut non vestibulum eros, at lobortis libero. Donec eget ante erat. Integer leo est, porttitor et arcu quis, ullamcorper lacinia ante. Praesent aliquet gravida mauris, ut facilisis felis vestibulum a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam est magna, sollicitudin sit amet elit in, congue tempor lacus.</p>
+        <h4>Register for an Account</h4>
         <div class="divider"></div>
         <blockquote>
-          <span>This is a page to test the layout of Materialize. The text here has been generated by <a class="grey-text" href="http://www.lipsum.com/">lipsum.com</a>.</span>
+          <span>To be implemented</span>
         </blockquote>
       </div>
     </main>
