@@ -98,10 +98,6 @@
             </div>
           </form>
         </div>
-        <div class="divider"></div>
-        <blockquote>
-          <span>To be implemented</span>
-        </blockquote>
       </div>
     </main>
     <footer class="page-footer">
