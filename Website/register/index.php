@@ -14,6 +14,11 @@
     <script src="https://use.fontawesome.com/4857764df8.js"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="../assets/js/materialize.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
+    <script>
+      function register() {
+        
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body class="grey darken-4">
@@ -99,7 +104,7 @@
             </div>
             <div class="row">
               <center>
-                <button class="waves-effect waves-light btn-large g-recaptcha" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" data-callback="register" style="min-width: 98%" onclick="register()">Register</button>
+                <button class="waves-effect waves-dark btn-large g-recaptcha light-blue darken-2" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" data-callback="register" style="min-width: 98%" onclick="register()">Register</button>
               </center>
             </div>
           </form>
