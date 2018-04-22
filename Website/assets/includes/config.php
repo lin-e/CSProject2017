@@ -1,7 +1,7 @@
 <?php
   include("secret.php");
   // DATABASE SETTINGS
-  $db_username = 'csproj'; // MySQL username
+  $db_username = 'csproject'; // MySQL username
   $db_password = $sec_db_password; // MySQL password, pull from secret.php so sensitive data won't be published.
   $db_hostname = 'localhost'; // MySQL host
   $db_name = 'cs_project'; // MySQL datbase name
