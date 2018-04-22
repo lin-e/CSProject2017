@@ -18,7 +18,7 @@
         }
       }
       if (!$valid) { // if invalid
-        die("{\"status\":0,\"content\":\"Invalid characters in username; only alphanumeric characters, dots, dashes and underscores permitted.\"}"); // die with error
+        die("{\"status\":0,\"content\":\"Invalid characters in username; only alphanumeric characters, dots, dashes and underscores permitted\"}");
       }
     }
   }
@@ -29,6 +29,13 @@
     if (!(strlen($md5) == 32 && ctype_xdigit($md5))) { // if length isn't 32 or contains non hex characters
       die("{\"status\":0,\"content\":\"Invalid hash\"}");
     }
+  }
+  $user_check = $db->query("SELECT * FROM users WHERE username='$username'");
+  if (mysqli_num_rows($user_check) == 0) {
+    $hashed = $db->real_escape_string(password_hash($md5, PASSWORD_DEFAULT));
+    $db->query("INSERT INTO users (username, hash) VALUES ('$username', '$hashed'") or die("{\"status\":0,\"content\":\"Error in user creation\"}");
+  } else {
+    die("{\"status\":0,\"content\":\"Username already exists\"}"); // die with error
   }
   die("{\"status\":1,\"content\":\"Success\"}");
 ?>
