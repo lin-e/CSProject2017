@@ -19,6 +19,7 @@
       function callback() { // empty function for reCAPTCHA to callback
       }
       function register() {
+        grecaptcha.execute(); // execute captcha check
         var captcha_data = grecaptcha.getResponse(); // get captcha response
         if ($('#password').val() == "" || $('#username').val() == "" || $('#password_confirm').val() == "") { // check no fields are empty
           Materialize.toast("Please complete all fields!"); // tell user to complete all fields
@@ -38,7 +39,7 @@
                 } else {
                   Materialize.toast("Error: " + obj.content); // tell the user the error
                 }
-                grecaptcha.reset(); // reset on completion
+                grecaptcha.reset(); // reset
               }
             });
           } else {
@@ -130,9 +131,10 @@
                 <label for="password_confrim">Confirm Password</label>
               </div>
             </div>
+            <div class="g-recaptcha" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_"></div>
             <div class="row">
               <center>
-                <button class="waves-effect waves-dark btn-large g-recaptcha light-blue darken-2" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" onclick="register()" data-callback="callback" style="min-width: 98%">Register</button>
+                <button class="waves-effect waves-dark btn-large light-blue darken-2" onclick="register()"style="min-width: 98%">Register</button>
               </center>
             </div>
           </form>
