@@ -10,4 +10,7 @@
   $username_min_length = 4;
   $username_max_length = 32;
   $username_allowed_chars = 'abcdefghijklmnopqrstuvwxyz0123456789_-.';
+
+  $reload_assets = false;
+  $site_title = "project.eugenel.in";
 ?>

@@ -1,0 +1,14 @@
+{
+  "title":"Project",
+  "copyright":"eugenel.in",
+  "description":"Site for project",
+  "madewith":"Made with <a class=\"grey-text text-lighten-4\" href=\"http://materializecss.com/\">Materialize</a> and <a class=\"grey-text text-lighten-4\" href=\"http://fontawesome.io/\">FontAwesome</a>",
+  "links":[
+    {
+      "name":"GitHub",
+      "fa":"github",
+      "link":"https://github.com/lin-e/",
+      "hide":false
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "logo":"<a class=\"brand-logo left neou\">&nbsp;CS Project</a>",
+  "navbar":[
+    {
+      "name":"Home",
+      "cwd":"/var/www/project/Website",
+      "fa":"home",
+      "link":"https://project.eugenel.in/",
+      "hide":false
+    },
+    {
+      "name":"Register",
+      "cwd":"/var/www/project/Website/register",
+      "fa":"user",
+      "link":"https://project.eugenel.in/register",
+      "hide":true
+    }
+  ]
+}
