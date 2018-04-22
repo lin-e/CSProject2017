@@ -12,5 +12,5 @@
       die("{\"status\":0,\"content\":\"Invalid hash\"}");
     }
   }
-  die("{\"status\":1,\"content\":\"Success\"}")
+  die("{\"status\":1,\"content\":\"Success\"}");
 ?>
