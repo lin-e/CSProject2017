@@ -5,6 +5,7 @@
     die("{\"status\":0,\"content\":\"Please complete the reCAPTCHA\"}");
   } else {
     $ch = curl_init(); // initialise curl
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // dont't output
     curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify"); // set URL
     curl_setopt($ch, CURLOPT_POST, 2); // 2 fields
     $captcha = $data->captcha; // get captcha from json
