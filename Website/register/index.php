@@ -14,9 +14,10 @@
     <script src="https://use.fontawesome.com/4857764df8.js"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="../assets/js/materialize.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
+    <script src="../assets/js/jquery.md5.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
     <script>
       function register() {
-        
+        console.log($.md5('password'));
       }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
