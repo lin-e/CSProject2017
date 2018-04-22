@@ -17,7 +17,10 @@
     <script src="../assets/js/jquery.md5.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
     <script>
       function register() {
-        console.log(grecaptcha.getResponse());
+        var captcha_data = grecaptcha.getResponse();
+        var pass = $.md5($('#password').val());
+        var confirm = $.md5($('#password_confirm').val());
+        console.log(pass);
       }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
