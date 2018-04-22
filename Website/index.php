@@ -5,7 +5,10 @@
   </head>
   <body>
     <div style="display: flex; justify-content: center; align-items: center;">
-      <pre>"PLACEHOLDER TEXT\nPROJECT NAME"</pre>
+      <pre>
+      "PLACEHOLDER TEXT
+      PROJECT NAME"
+      </pre>
     </div>
   </body>
 </html>
