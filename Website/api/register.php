@@ -16,9 +16,9 @@
           $valid = false; // mark as false
           break; // exit loop
         }
-        if (!$valid) { // if invalid
-          die("{\"status\":0,\"content\":\"Invalid characters in username; only alphanumeric characters, dots, dashes and underscores permitted.\"}"); // die with error
-        }
+      }
+      if (!$valid) { // if invalid
+        die("{\"status\":0,\"content\":\"Invalid characters in username; only alphanumeric characters, dots, dashes and underscores permitted.\"}"); // die with error
       }
     }
   }
