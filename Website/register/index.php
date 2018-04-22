@@ -37,6 +37,7 @@
                   Materialize.toast("Registration complete!"); // notify the user
                 } else {
                   Materialize.toast("Error: " + obj.content); // tell the user the error
+                  grecaptcha.reset(); // reset
                 }
               }
             });
