@@ -20,7 +20,11 @@
         var captcha_data = grecaptcha.getResponse();
         var pass = $.md5($('#password').val());
         var confirm = $.md5($('#password_confirm').val());
-        console.log(pass);
+        if (pass == confirm) {
+
+        } else {
+          Materialize.toast("Password and confirmation don't match!");
+        }
       }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
