@@ -98,7 +98,9 @@
               </div>
             </div>
             <div class="row">
-              <button class="waves-effect waves-light btn-large g-recaptcha" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" data-callback="register" style="min-width: 98%" onclick="register()">Register</button>
+              <center>
+                <button class="waves-effect waves-light btn-large g-recaptcha" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" data-callback="register" style="min-width: 98%" onclick="register()">Register</button>
+              </center>
             </div>
           </form>
         </div>
