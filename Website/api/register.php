@@ -34,6 +34,7 @@
   if (mysqli_num_rows($user_check) == 0) { // if no records
     $hashed = $db->real_escape_string(password_hash($data->md5, PASSWORD_DEFAULT)); // hash the string
     echo $hashed;
+    echo "INSERT INTO users (username, passhash) VALUES ('$username', '$hashed')";
     $db->query("INSERT INTO users (username, passhash) VALUES ('$username', '$hashed')") or die("{\"status\":0,\"content\":\"Error in user creation\"}"); // insert into database
   } else {
     die("{\"status\":0,\"content\":\"Username already exists\"}");
