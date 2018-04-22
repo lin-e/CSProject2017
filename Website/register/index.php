@@ -74,10 +74,6 @@
       </div>
     </nav>
     <main class="white-text">
-
-    <p class="range-field red">
-      <input type="range" class="red" id="test5" min="0" max="255" />
-    </p>
       <div class="container">
         <h4>Register for an Account</h4>
         <div class="divider"></div>
