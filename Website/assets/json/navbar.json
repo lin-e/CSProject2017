@@ -13,7 +13,7 @@
       "cwd":"/var/www/project/Website/register",
       "fa":"user",
       "link":"https://project.eugenel.in/register",
-      "hide":true
+      "hide":false
     }
   ]
 }
