@@ -17,13 +17,30 @@
     <script src="../assets/js/jquery.md5.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
     <script>
       function register() {
-        var captcha_data = grecaptcha.getResponse();
-        var pass = $.md5($('#password').val());
-        var confirm = $.md5($('#password_confirm').val());
-        if (pass == confirm) {
-
+        var captcha_data = grecaptcha.getResponse(); // get captcha response
+        if ($('#password').val() == "" || $('#username').val() == "" || ('#password_confirm').val() == "") { // check no fields are empty
+          Materialize.toast("Please complete all fields!"); // tell user to complete all fields
         } else {
-          Materialize.toast("Password and confirmation don't match!");
+          var pass = $.md5($('#password').val()); // get password hash
+          var confirm = $.md5($('#password_confirm').val()); // same for confirmation
+          var username = escape($('#username').val()); // escape string, in case someone does try injection
+          if (pass == confirm) { // if the passwords match
+            $.ajax({ // start ajax
+              type: "POST", // post
+              url: "../api/register.php", // to register endpoint
+              data: "data={\"username\":\"" + escape($('#username').val()) + "\",\"md5\":\"" + pass + "\",\"captcha\":\"" + captcha_data + "\"}", // create json
+              success: function(data) { // on success
+                var obj = JSON.parse(data); // parse to object
+                if (obj.status == 1) { // if success
+                  Materialize.toast("Registration complete!"); // notify the user
+                } else {
+                  Materialize.toast("Error: " + obj.content); // tell the user the error
+                }
+              }
+            });
+          } else {
+            Materialize.toast("Password and confirmation don't match!"); // notify user
+          }
         }
       }
     </script>
@@ -95,7 +112,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="username" type="text">
-                <label for="username">Username</label>
+                <label for="username">Username (4-32 characters, only alphanumeric, dot, dash, and underscore are permitted</label>
               </div>
             </div>
             <div class="row">

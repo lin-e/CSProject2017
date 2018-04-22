@@ -18,4 +18,5 @@
 
   // GOOGLE KEYS
   $google_site_key = '6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_';
+  $google_secret_key = $sec_google_secret;
 ?>

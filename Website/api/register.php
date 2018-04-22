@@ -1,6 +1,19 @@
 <?php
   include("../assets/includes/config.php"); // include configuration (which includes database connection)
   $data = json_decode($_POST['data']); // take the post parameter and decode it
+  if (!isset($data->captcha)) { // if captcha is empty
+    die("{\"status\":0,\"content\":\"Please complete the reCAPTCHA\"}");
+  } else {
+    $ch = curl_init(); // initialise curl
+    curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify"); // set URL
+    curl_setopt($ch, CURLOPT_POST, 2); // 2 fields
+    $captcha = $data->captcha; // get captcha from json
+    curl_setopt($ch, CURLOPT_POSTFIELDS, "secret=".$google_secret_key."&response=".$captcha); // create fields with keys
+    $result = json_decode(curl_exec($ch)); // execute and decode
+    if (!($result->success)) { // if not success
+      die("{\"status\":0,\"content\":\"Please complete the reCAPTCHA\"}"); // error to user
+    }
+  }
   if (!isset($data->username)) { // if the username isn't set in the json
     die("{\"status\":0,\"content\":\"No username specified\"}"); // die with error
   } else {
