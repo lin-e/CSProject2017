@@ -16,6 +16,8 @@
     <script src="../assets/js/materialize.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
     <script src="../assets/js/jquery.md5.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
     <script>
+      function callback() { // empty function for reCAPTCHA to callback
+      }
       function register() {
         var captcha_data = grecaptcha.getResponse(); // get captcha response
         if ($('#password').val() == "" || $('#username').val() == "" || $('#password_confirm').val() == "") { // check no fields are empty
@@ -129,7 +131,7 @@
             </div>
             <div class="row">
               <center>
-                <button class="waves-effect waves-dark btn-large g-recaptcha light-blue darken-2" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" onclick="register()" style="min-width: 98%">Register</button>
+                <button class="waves-effect waves-dark btn-large g-recaptcha light-blue darken-2" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" onclick="register()" data-callback="callback" style="min-width: 98%">Register</button>
               </center>
             </div>
           </form>
