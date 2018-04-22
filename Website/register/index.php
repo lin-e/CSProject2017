@@ -12,6 +12,7 @@
     <link type="text/css" rel="stylesheet" href="../assets/css/main.css?<?php if ($reload_assets) { echo time(); } ?>">
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://use.fontawesome.com/4857764df8.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="../assets/js/materialize.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
@@ -95,6 +96,9 @@
                 <input id="password_confirm" type="password">
                 <label for="password_confrim">Confirm Password</label>
               </div>
+            </div>
+            <div class="row">
+              <button class="waves-effect waves-light btn-large g-recaptcha" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" data-callback="register" onclick="register()">Register</button>
             </div>
           </form>
         </div>

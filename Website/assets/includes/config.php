@@ -14,5 +14,8 @@
 
   // SITE SETTINGS
   $reload_assets = false; // whether the assets should be forced to reload
-  $site_title = "project.eugenel.in"; // the title for the site
+  $site_title = 'project.eugenel.in'; // the title for the site
+
+  // GOOGLE KEYS
+  $google_site_key = '6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_';
 ?>
