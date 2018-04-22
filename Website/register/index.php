@@ -18,7 +18,7 @@
     <script>
       function register() {
         var captcha_data = grecaptcha.getResponse(); // get captcha response
-        if ($('#password').val() == "" || $('#username').val() == "" || ('#password_confirm').val() == "") { // check no fields are empty
+        if ($('#password').val() == "" || $('#username').val() == "" || $('#password_confirm').val() == "") { // check no fields are empty
           Materialize.toast("Please complete all fields!"); // tell user to complete all fields
         } else {
           var pass = $.md5($('#password').val()); // get password hash
