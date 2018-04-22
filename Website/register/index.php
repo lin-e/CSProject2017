@@ -31,41 +31,41 @@
     <nav>
       <div class="nav-wrapper">
 <?php
-  $raw_sites = file_get_contents('../assets/json/navbar.json');
-  $decoded_sites = json_decode($raw_sites);
-  echo "        ".$decoded_sites->logo."\n";
-  $normal_links = array();
-  $mobile_links = array();
-  foreach ($decoded_sites->navbar as $single_site) {
-    if ($single_site->hide) {
+  $raw_sites = file_get_contents('../assets/json/navbar.json'); // load the json
+  $decoded_sites = json_decode($raw_sites); // decode it
+  echo "        ".$decoded_sites->logo."\n"; // get the "logo"
+  $normal_links = array(); // create an array for links on larger screens
+  $mobile_links = array(); // create the same array for mobile compatibility
+  foreach ($decoded_sites->navbar as $single_site) { // iterates through each site
+    if ($single_site->hide) { // ignores if set to be hidden
       continue;
     }
-    $url = $single_site->link;
-    $fa = $single_site->fa;
-    $name = $single_site->name;
-    $normal_active = "";
-    $mobile_active = "";
-    if ($single_site->cwd == getcwd()) {
-      $url = "#!";
-      $normal_active = " active";
-      $mobile_active = " class=\"active\"";
+    $url = $single_site->link; // gets the link
+    $fa = $single_site->fa; // gets the font awesome icon
+    $name = $single_site->name; // gets the name of the site
+    $normal_active = ""; // set activity
+    $mobile_active = ""; // same
+    if ($single_site->cwd == getcwd()) { // if this is the current page due to directories
+      $url = "#!"; // set to not change page
+      $normal_active = " active"; // set the active class for desktop devices
+      $mobile_active = " class=\"active\""; // same for mobile devices
     }
-    array_push($normal_links, "<li class=\"waves-effect waves-lighten$normal_active\"><a href=\"$url\"><i class=\"fa fa-fw fa-$fa\"></i>&nbsp; $name</a></li>");
-    array_push($mobile_links, "<li$mobile_active><a href=\"$url\">$name</a></li>");
+    array_push($normal_links, "<li class=\"waves-effect waves-lighten$normal_active\"><a href=\"$url\"><i class=\"fa fa-fw fa-$fa\"></i>&nbsp; $name</a></li>"); // push to array for normal devices
+    array_push($mobile_links, "<li$mobile_active><a href=\"$url\">$name</a></li>"); // same for mobile
   }
 ?>
         <a href="#" data-activates="mobile-nav" class="button-collapse right"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
 <?php
-  $normal_padding = "          ";
-  foreach ($normal_links as $normal_link) {
-    echo $normal_padding.$normal_link."\n";
+  $normal_padding = "          "; // the actual padding to make the resulting html look nice
+  foreach ($normal_links as $normal_link) { // iterates through each normal link
+    echo $normal_padding.$normal_link."\n"; // prints it with the padding
   }
 ?>
         </ul>
         <ul class="side-nav" id="mobile-nav">
 <?php
-  $mobile_padding = "          ";
+  $mobile_padding = "          "; // same as abovey for mobile
   foreach ($mobile_links as $mobile_link) {
     echo $mobile_padding.$mobile_link."\n";
   }
@@ -76,6 +76,28 @@
     <main class="white-text">
       <div class="container">
         <h4>Register for an Account</h4>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="username" type="text">
+                <label for="username">Username</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="password" type="password">
+                <label for="password">Password</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="password_confirm" type="password">
+                <label for="password_confrim">Confirm Password</label>
+              </div>
+            </div>
+          </form>
+        </div>
         <div class="divider"></div>
         <blockquote>
           <span>To be implemented</span>
@@ -84,6 +106,7 @@
     </main>
     <footer class="page-footer">
 <?php
+  // this is the same code as the navbar but for the page footer
   $raw_footer = file_get_contents('../assets/json/footer.json');
   $decoded_footer = json_decode($raw_footer);
   $footer_links = array();
