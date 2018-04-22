@@ -6,7 +6,7 @@
   } else {
     $username = strtolower($data->username);
     if (strlen($username) < $username_min_length || strlen($username) > $username_max_length) { // check username length
-      die("{\"status\":0,\"content\":\"Username must be between ".str($username_min_length)." and ".str($username_max_length)." characters\"}");
+      die("{\"status\":0,\"content\":\"Username must be between ".strval($username_min_length)." and ".strval($username_max_length)." characters\"}");
     } else {
       $allowed_chars = $username_allowed_chars; // pull allowed characters from config
       $valid = true; // flag for name validity
