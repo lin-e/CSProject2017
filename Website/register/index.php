@@ -129,10 +129,9 @@
                 <label for="password_confrim">Confirm Password</label>
               </div>
             </div>
-            <div class="g-recaptcha" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" data-size="invisible"></div>
             <div class="row">
               <center>
-                <button class="waves-effect waves-dark btn-large light-blue darken-2" onclick="register()"style="min-width: 98%">Register</button>
+                <button class="g-recaptcha waves-effect waves-dark btn-large light-blue darken-2" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" onclick="register()" style="min-width: 98%">Register</button>
               </center>
             </div>
           </form>
