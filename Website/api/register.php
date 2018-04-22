@@ -35,7 +35,7 @@
     $hashed = $db->real_escape_string(password_hash($data->md5, PASSWORD_DEFAULT)); // hash the string
     $db->query("INSERT INTO users (username, hash) VALUES ('$username', '$hashed'") or die("{\"status\":0,\"content\":\"Error in user creation\"}"); // insert into database
   } else {
-    die("{\"status\":0,\"content\":\"Username already exists\"}"); // die with error
+    die("{\"status\":0,\"content\":\"Username already exists\"}");
   }
-  die("{\"status\":1,\"content\":\"Success\"}"); // die with success
+  die("{\"status\":1,\"content\":\"Success\"}");
 ?>
