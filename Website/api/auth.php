@@ -47,8 +47,8 @@
   function generate_token($len) { // function to generate a token
     $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // the available characters for the token
     $final = ""; // the string to return
-    for ($i = 0; $i <= $len; $i++) { // iterate for the set length
-      $final .= $characters[rand(0, strlen($characters))]; // append to final string
+    for ($i = 0; $i < $len; $i++) { // iterate for the set length
+      $final .= $characters[rand(0, strlen($characters) - 1)]; // append to final string
     }
     return $final; // return the final string
   }
