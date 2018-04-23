@@ -35,8 +35,8 @@
     die("{\"status\":0,\"content\":\"Invalid username\"}");
   } else {
     $user = $user_check->fetch_assoc(); // get user row;
-    if (password_verify($data->md5, strval($user["passhash"]))) {
-      die("{\"status\":1,\"content\":\"Success\"}");
+    if (password_verify($data->md5, strval($user["passhash"]))) { // check if the user's sent hash matches with the one stored, but using the built-in methods
+      die("{\"status\":1,\"content\":\"Success\"}"); // success - this will be changed to a token when sessions are implemented
     } else {
       die("{\"status\":0,\"content\":\"Invalid hash\"}");
     }
