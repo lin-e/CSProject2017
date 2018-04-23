@@ -36,8 +36,8 @@
   } else {
     $user = $user_check->fetch_assoc(); // get user row;
     if (password_verify($data->md5, strval($user["passhash"]))) { // check if the user's sent hash matches with the one stored, but using the built-in methods
-      echo generate_token($token_length);
-      die("{\"status\":1,\"content\":\"Success\"}"); // success - this will be changed to a token when sessions are implemented
+      $generated = generate_token($token_length); // generate the token
+      die("{\"status\":1,\"content\":\"$generated\"}"); // success; send token
     } else {
       die("{\"status\":0,\"content\":\"Login failed\"}");
     }

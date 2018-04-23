@@ -21,6 +21,5 @@
   $google_secret_key = $sec_google_secret; // pull secret key from secret.php
 
   // AUTH CONFIG
-  $token_lifetime = 86400; // how long the token should be valid for
   $token_length = 64; // the length of the token
 ?>
