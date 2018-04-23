@@ -2,6 +2,7 @@
 # Sensitive data
 ###
 Website/assets/includes/secret.php
+test_password.dat
 
 ###
 # Assets
