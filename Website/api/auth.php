@@ -32,13 +32,13 @@
   }
   $user_check = $db->query("SELECT * FROM users WHERE username='$username'"); // query the database for the password
   if (mysqli_num_rows($user_check) == 0) { // if no records
-    die("{\"status\":0,\"content\":\"Invalid username\"}");
+    die("{\"status\":0,\"content\":\"Login failed\"}");
   } else {
     $user = $user_check->fetch_assoc(); // get user row;
     if (password_verify($data->md5, strval($user["passhash"]))) { // check if the user's sent hash matches with the one stored, but using the built-in methods
       die("{\"status\":1,\"content\":\"Success\"}"); // success - this will be changed to a token when sessions are implemented
     } else {
-      die("{\"status\":0,\"content\":\"Invalid hash\"}");
+      die("{\"status\":0,\"content\":\"Login failed\"}");
     }
   }
   die("{\"status\":0,\"content\":\"Unknown error\"}");
