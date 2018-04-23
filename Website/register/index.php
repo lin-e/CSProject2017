@@ -35,6 +35,9 @@
                 var obj = JSON.parse(data); // parse to object
                 if (obj.status == 1) { // if success
                   Materialize.toast("Registration complete!"); // notify the user
+                  var button = $('#register');
+                  button.addClass('disabled');
+                  button.html('Registered');
                 } else {
                   Materialize.toast("Error: " + obj.content); // tell the user the error
                   grecaptcha.reset(); // reset
@@ -132,7 +135,7 @@
             </div>
             <div class="row">
               <center>
-                <button class="g-recaptcha waves-effect waves-dark btn-large light-blue darken-2" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" data-callback="register" style="min-width: 98%">Register</button>
+                <button id="register" class="g-recaptcha waves-effect waves-dark btn-large light-blue darken-2" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" data-callback="register" style="min-width: 98%">Register</button>
               </center>
             </div>
           </form>
