@@ -35,9 +35,9 @@
                 var obj = JSON.parse(data); // parse to object
                 if (obj.status == 1) { // if success
                   Materialize.toast("Registration complete!"); // notify the user
-                  var button = $('#register');
-                  button.addClass('disabled');
-                  button.html('Registered');
+                  var button = $('#register'); // get the actual element
+                  button.addClass('disabled'); // add a class
+                  button.html('Registered'); // change text
                 } else {
                   Materialize.toast("Error: " + obj.content); // tell the user the error
                   grecaptcha.reset(); // reset
