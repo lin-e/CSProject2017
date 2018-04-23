@@ -36,10 +36,20 @@
   } else {
     $user = $user_check->fetch_assoc(); // get user row;
     if (password_verify($data->md5, strval($user["passhash"]))) { // check if the user's sent hash matches with the one stored, but using the built-in methods
+      echo generate_token($token_length);
       die("{\"status\":1,\"content\":\"Success\"}"); // success - this will be changed to a token when sessions are implemented
     } else {
       die("{\"status\":0,\"content\":\"Login failed\"}");
     }
   }
   die("{\"status\":0,\"content\":\"Unknown error\"}");
+
+  function generate_token($len) { // function to generate a token
+    $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // the available characters for the token
+    $final = ""; // the string to return
+    for ($i = 0; $i < $len; $i++) { // iterate for the set length
+      $final .= $characters[rand(0, strlen($characters))]; // append to final string
+    }
+    return $final; // return the final string
+  }
 ?>
