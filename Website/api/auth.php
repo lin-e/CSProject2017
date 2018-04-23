@@ -36,7 +36,19 @@
   } else {
     $user = $user_check->fetch_assoc(); // get user row;
     if (password_verify($data->md5, strval($user["passhash"]))) { // check if the user's sent hash matches with the one stored, but using the built-in methods
-      $generated = generate_token($token_length); // generate the token
+      $generated = "";
+      while (true) { // iterate until token generated
+        $generated = generate_token($token_length); // generate token
+        $sessionid_check = $db->query("SELECT * FROM user_sessions WHERE sessionid=$'$generated'");
+        if (mysqli_num_rows($sessionid_check) == 0) { // if id isn't in use
+          break; // exit loop
+        }
+      }
+      $time_string = strval(time()); // get the current timestamp
+      $ip = $_SERVER['REMOTE_ADDR']; // get the ip address of the user
+      $db->query("UPDATE user_sessions SET active=0 WHERE username='$username'") or die("{\"status\":0,\"content\":\"Login failed\"}"); // invalidate other sessions or fail
+      $db->query("INSERT INTO user_sessions (sessionid, username, ip, time_started, active) VALUES ('$generated', '$username', '$ip', $time_string, 1)") or die("{\"status\":0,\"content\":\"Login failed\"}"); // insert into sessions or die with error
+      $db->query("UPDATE users SET sessionid='$generated' WHERE username='$username'") or die("{\"status\":0,\"content\":\"Login failed\"}"); // update user to get current token
       die("{\"status\":1,\"content\":\"$generated\"}"); // success; send token
     } else {
       die("{\"status\":0,\"content\":\"Login failed\"}");
