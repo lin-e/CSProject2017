@@ -45,9 +45,10 @@
         }
       }
       $time_string = strval(time()); // get the current timestamp
+      $expire= strval(time() + $token_lifetime_extension);
       $ip = $_SERVER['REMOTE_ADDR']; // get the ip address of the user
       $db->query("UPDATE user_sessions SET active=0 WHERE username='$username'") or die("{\"status\":0,\"content\":\"Login failed\"}"); // invalidate other sessions or fail
-      $db->query("INSERT INTO user_sessions (sessionid, username, ip, time_started, active) VALUES ('$generated', '$username', '$ip', $time_string, 1)") or die("{\"status\":0,\"content\":\"Login failed\"}"); // insert into sessions or die with error
+      $db->query("INSERT INTO user_sessions (sessionid, username, ip, time_started, expire_time, active) VALUES ('$generated', '$username', '$ip', $expire, $time_string, 1)") or die("{\"status\":0,\"content\":\"Login failed\"}"); // insert into sessions or die with error
       $db->query("UPDATE users SET sessionid='$generated' WHERE username='$username'") or die("{\"status\":0,\"content\":\"Login failed\"}"); // update user to get current token
       die("{\"status\":1,\"content\":\"$generated\"}"); // success; send token
     } else {
