@@ -1,4 +1,5 @@
 <?php
+  include("secret.php");
   include("config.php"); // config includes secret
   echo $db_username;
   // TOKEN REASONS:
