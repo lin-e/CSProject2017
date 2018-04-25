@@ -1,5 +1,6 @@
 <?php
-  include("../assets/includes/master.php"); // include configuration (which includes database connection)
+  include("../assets/includes/config.php"); // include configuration (which includes database connection)
+  include("../assets/includes/master.php"); // include functions
   $data = json_decode($_POST['data']); // take the post parameter and decode it
   if (!isset($data->username)) { // if the username isn't set in the json
     die("{\"status\":0,\"content\":\"No username specified\"}"); // die with error
