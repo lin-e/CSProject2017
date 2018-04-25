@@ -23,7 +23,11 @@
   // AUTH CONFIG
   $token_length = 64; // the length of the token
   $token_lifetime_extension = 14400; // every time the token is used, the lifetime is extended by 4 hours.
-  
+
+  idk_test();
+  function idk_test() {
+    echo $db_name;
+  }
   // TOKEN REASONS:
   // EXPIRED - the token was used after the expiry time
   // NEW_AUTH - event happened due to user's manual authentication
