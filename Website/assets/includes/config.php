@@ -22,5 +22,5 @@
 
   // AUTH CONFIG
   $token_length = 64; // the length of the token
-  $token_lifetime_extension = 14400; // every time the token is used, the lifetime is extended by 4 hours.
+  $token_lifetime = 14400; // lifetime of token
 ?>

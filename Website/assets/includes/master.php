@@ -1,33 +1,5 @@
 <?php
-  include("secret.php");
-  // DATABASE SETTINGS
-  $db_username = 'csproject'; // MySQL username
-  $db_password = $sec_db_password; // MySQL password, pull from secret.php so sensitive data won't be published.
-  $db_hostname = 'localhost'; // MySQL host
-  $db_name = 'cs_project'; // MySQL datbase name
-  $db = mysqli_connect($db_hostname, $db_username, $db_password, $db_name) or die("{\"status\":0,\"content\":\"Failed to connect to database\"}"); // connect or error
-
-  // USERNAME SETTINGS
-  $username_min_length = 4; // minimum length for the username
-  $username_max_length = 32; // same as above
-  $username_allowed_chars = 'abcdefghijklmnopqrstuvwxyz0123456789_-.'; // username is case insensitive, these are the characters allowed
-
-  // SITE SETTINGS
-  $reload_assets = false; // whether the assets should be forced to reload
-  $site_title = 'project.eugenel.in'; // the title for the site
-
-  // GOOGLE KEYS
-  $google_site_key = '6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_'; // google recaptcha site key
-  $google_secret_key = $sec_google_secret; // pull secret key from secret.php
-
-  // AUTH CONFIG
-  $token_length = 64; // the length of the token
-  $token_lifetime_extension = 14400; // every time the token is used, the lifetime is extended by 4 hours.
-
-  idk_test();
-  function idk_test() {
-    echo $db_name;
-  }
+  require("config.php"); // config includes secret
   // TOKEN REASONS:
   // EXPIRED - the token was used after the expiry time
   // NEW_AUTH - event happened due to user's manual authentication
@@ -44,6 +16,8 @@
     return $final; // return the final string
   }
   function generate_token() { // moreso a function to check whether the generated token can be used
+    global $db;
+    global $token_length;
     while (true) { // iterate until token generated
       $generated = generate_token_string($token_length); // generate token
       $sessionid_check = $db->query("SELECT * FROM user_sessions WHERE sessionid='$generated'"); // query to fetch token with generated id
@@ -54,15 +28,18 @@
     return null; // if for some reason it doesn't work, give a default return value
   }
   function invalidate_token($token, $reason) { // function to mark a token as invalid
+    global $db;
     $flag = true; // set return flag
     $db->query("UPDATE user_sessions SET active=0, expire_reason='$reason' WHERE sessionid='$token'") or $flag = false; // mark flag as false if the query fails
     return $flag; // return the flag
   }
   function create_token($user, $reason, $invalidate) {
+    global $db;
+    global $token_lifetime;
     $flag = true; // same as invalidation flag
     $token = generate_token(); // generate the token string
     $time_string = strval(time()); // get the current timestamp
-    $expire = strval(time() + $token_lifetime_extension); // set expire time
+    $expire = strval(time() + $token_lifetime); // set expire time
     $ip = $_SERVER['REMOTE_ADDR']; // get the ip address of the user
     if ($invalidate) { // if the function should handle token invalidation (small optimisation to not have to fetch from database if we already know the token)
       $existing_token = $db->query("SELECT * FROM user_sessions WHERE username='$user' AND active=1"); // find the existing token
@@ -81,6 +58,7 @@
     return $token; // return the generated token
   }
   function validate_token($token) { // token validation
+    global $db;
     $return_val = array(); // holds the return value
     $return_val["status"] = 0; // this is the most common return value, so we can use it as the default
     $return_val["content"] = "Invalid token";
