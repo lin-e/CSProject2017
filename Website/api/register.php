@@ -1,5 +1,5 @@
 <?php
-  include("../assets/includes/config.php"); // include configuration (which includes database connection)
+  include("../assets/includes/master.php"); // include configuration (which includes database connection)
   $data = json_decode($_POST['data']); // take the post parameter and decode it
   if (!isset($data->captcha)) { // if captcha is empty
     die("{\"status\":0,\"content\":\"Please complete the reCAPTCHA\"}");
