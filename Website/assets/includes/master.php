@@ -1,6 +1,7 @@
 <?php
   $defined = get_defined_vars();
   require("config.php"); // config includes secret
+  print_r(get_defined_vars());
   $newly_defined = array_diff_assoc($defined, get_defined_vars());
   $GLOBALS = array_merge($GLOBALS, $newly_defined);
   // TOKEN REASONS:
