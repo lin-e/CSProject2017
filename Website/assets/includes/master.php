@@ -59,6 +59,7 @@
   }
   function validate_token($token) { // token validation
     global $db;
+    global $token_length;
     $return_val = array(); // holds the return value
     $return_val["status"] = 0; // this is the most common return value, so we can use it as the default
     $return_val["content"] = "Invalid token";
