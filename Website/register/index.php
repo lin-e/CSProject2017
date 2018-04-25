@@ -1,5 +1,5 @@
 <?php
-  include('../assets/includes/config.php');
+  include('../assets/includes/masater.php');
 ?>
 <html>
   <head>
