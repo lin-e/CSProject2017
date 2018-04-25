@@ -43,7 +43,7 @@
     $ip = $_SERVER['REMOTE_ADDR']; // get the ip address of the user
     if ($invalidate) { // if the function should handle token invalidation (small optimisation to not have to fetch from database if we already know the token)
       $existing_token = $db->query("SELECT * FROM user_sessions WHERE username='$user' AND active=1"); // find the existing token
-      if (!(mysql_num_rows($existing_token) == 0)) { // if there is an active session
+      if (!(mysqli_num_rows($existing_token) == 0)) { // if there is an active session
         $row = $existing_token->fetch_assoc(); // get the row
         invalidate_token(strval($row["sessionid"]), $reason) or $flag = false; // invalidate with the same reason for consistency
         if (!$flag) { // if error
