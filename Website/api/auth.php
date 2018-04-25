@@ -1,5 +1,6 @@
 <?php
   include("../assets/includes/config.php"); // include configuration (which includes database connection)
+  include("../assets/includes/functions.php"); // include functions file
   $data = json_decode($_POST['data']); // take the post parameter and decode it
   if (!isset($data->username)) { // if the username isn't set in the json
     die("{\"status\":0,\"content\":\"No username specified\"}"); // die with error
@@ -47,8 +48,8 @@
       $time_string = strval(time()); // get the current timestamp
       $expire= strval(time() + $token_lifetime_extension);
       $ip = $_SERVER['REMOTE_ADDR']; // get the ip address of the user
-      $db->query("UPDATE user_sessions SET active=0 WHERE username='$username'") or die("{\"status\":0,\"content\":\"Login failed\"}"); // invalidate other sessions or fail
-      $db->query("INSERT INTO user_sessions (sessionid, username, ip, time_started, expire_time, active) VALUES ('$generated', '$username', '$ip', $time_string, $expire, 1)") or die("{\"status\":0,\"content\":\"Login failed\"}"); // insert into sessions or die with error
+      $db->query("UPDATE user_sessions SET active=0, expire_reason='NEW_SESSION_CREATED' WHERE username='$username' AND active=1") or die("{\"status\":0,\"content\":\"Login failed\"}"); // invalidate other sessions or fail
+      $db->query("INSERT INTO user_sessions (sessionid, username, ip, time_started, expire_time, active, create_reason) VALUES ('$generated', '$username', '$ip', $time_string, $expire, 1, 'NEW_SESSION_AUTH')") or die("{\"status\":0,\"content\":\"Login failed\"}"); // insert into sessions or die with error
       $db->query("UPDATE users SET sessionid='$generated' WHERE username='$username'") or die("{\"status\":0,\"content\":\"Login failed\"}"); // update user to get current token
       die("{\"status\":1,\"content\":\"$generated\"}"); // success; send token
     } else {

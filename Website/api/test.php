@@ -1,5 +1,6 @@
 <?php
   include("../assets/includes/config.php"); // include configuration (which includes database connection)
+  include("../assets/includes/functions.php"); // include functions file
   $data = json_decode($_POST['data']); // take the post parameter and decode it
   if (!isset($data->token)) { // if captcha is empty
     die("{\"status\":0,\"content\":\"Please provide an authorisation token\"}");
@@ -27,7 +28,7 @@
       if ($ip == strval($row["ip"])) { // if the ip is the same as the original login
         $current_time = time();
         if ($current_time > intval($row["expire_time"])) {
-          $db->query("UPDATE user_sessions SET active=0 WHERE sessionid='$token'"); // invalidate the session
+          $db->query("UPDATE user_sessions SET active=0, expire_reason='EXPIRED' WHERE sessionid='$token'"); // invalidate the session
           die("{\"status\":0,\"content\":\"Token expired\"}"); // expired error
         } else {
           $username = strval($row["username"]); // get username
@@ -36,7 +37,7 @@
           die("{\"status\":1,\"content\":\"{\"user\":\"$username\",\"expire\":$expire}\"}"); // output username and expire time
         }
       } else {
-        $db->query("UPDATE user_sessions SET active=0 WHERE sessionid='$token'"); // invalidate the session
+        $db->query("UPDATE user_sessions SET active=0, expire_reason='IP_CHANGE' WHERE sessionid='$token'"); // invalidate the session
         die("{\"status\":0,\"content\":\"Invalid token\"}"); // give a generic error to attackers
       }
     } else {
