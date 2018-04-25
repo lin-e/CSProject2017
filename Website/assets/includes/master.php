@@ -18,7 +18,7 @@
   }
   function generate_token() { // moreso a function to check whether the generated token can be used
     while (true) { // iterate until token generated
-      $generated = generate_token($len); // generate token
+      $generated = generate_token($token_length); // generate token
       $sessionid_check = $db->query("SELECT * FROM user_sessions WHERE sessionid='$generated'"); // query to fetch token with generated id
       if (mysqli_num_rows($sessionid_check) == 0) { // if id isn't in use
         return $generated; // exit loop
