@@ -1,7 +1,8 @@
 <?php
-  include("secret.php");
-  include("config.php"); // config includes secret
-  echo $token_length;
+  $defined = get_defined_vars();
+  require("config.php"); // config includes secret
+  $newly_defined = array_diff_assoc($defined, get_defined_vars());
+  $GLOBALS = array_merge($GLOBALS, $newly_defined);
   // TOKEN REASONS:
   // EXPIRED - the token was used after the expiry time
   // NEW_AUTH - event happened due to user's manual authentication
