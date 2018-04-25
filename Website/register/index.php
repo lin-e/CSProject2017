@@ -1,5 +1,5 @@
 <?php
-  include('../assets/includes/masater.php');
+  include('../assets/includes/master.php');
 ?>
 <html>
   <head>
