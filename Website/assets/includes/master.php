@@ -1,6 +1,6 @@
 <?php
   include("config.php"); // config includes secret
-
+  echo $db_username;
   // TOKEN REASONS:
   // EXPIRED - the token was used after the expiry time
   // NEW_AUTH - event happened due to user's manual authentication
