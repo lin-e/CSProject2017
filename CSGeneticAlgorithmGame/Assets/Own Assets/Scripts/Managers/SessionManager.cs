@@ -1,12 +1,17 @@
 ﻿using System.Net;
 using System.IO;
 using System.Text;
+using System.Threading;
+using UnityEngine;
 
 public static class SessionManager // by using a static class we have variables that can be accessed from all scenes
 {
     public static string EndPoint = "https://project.eugenel.in/api/";
     public static WebRequestFactory Factory = new WebRequestFactory(null, new CookieContainer()); // create a new request manager
     public static string Token = ""; // stores the current active token
+    public static bool Running = false; // toggles the iteration
+    public static bool Authenticated = false; // if the user has a valid session
+    public static Thread ActiveThread = null;
     public static dynamic Authenticate(string user, string pass) // method to authenticate the user
     {
         try // attempt to run the code in the child scope
@@ -17,11 +22,17 @@ public static class SessionManager // by using a static class we have variables 
             if ((int)result.status == 1) // if the request was successful
             {
                 Token = (string)result.content; // set the token to be the response
+                Authenticated = true; // mark as authenticated
+            }
+            else
+            {
+                Authenticated = false; // remove authentication flag
             }
             return result; // return the decoded content
         }
         catch // if it errors out (most likely due to connection)
         {
+            Authenticated = false;
             return DynamicJson.Deserialize("{\"status\":0,\"content\":\"Error connecting to server\"}"); // return a generic error
         }
     }
@@ -35,11 +46,17 @@ public static class SessionManager // by using a static class we have variables 
             if ((int)result.status == 1) // if the request was successful
             {
                 Token = (string)result.content; // set the token to be the response
+                Authenticated = true;
+            }
+            else
+            {
+                Authenticated = false;
             }
             return result; // return the decoded content
         }
         catch // if it errors out (most likely due to connection)
         {
+            Authenticated = false;
             return DynamicJson.Deserialize("{\"status\":0,\"content\":\"Error connecting to server\"}"); // return a generic error
         }
     }
@@ -56,5 +73,25 @@ public static class SessionManager // by using a static class we have variables 
         {
             return new StreamReader(response.GetResponseStream()).ReadToEnd(); // read the stream and return
         }
+    }
+    public static void Start() // runs iterations
+    {
+        Running = true; // mark running as true
+        ActiveThread = new Thread(() => // create new thread
+        {
+            int i = 0; // just a test function to show continuity
+            while (Running) // does this while running
+            {
+                Debug.Log("SESSION MANAGER: " + i.ToString()); // logs in the console
+                i++; // increments by 1
+                Thread.Sleep(2000); // delay 2 seconds
+            }
+        });
+        ActiveThread.Start(); // start the thread
+    }
+    public static void Stop() // method to stop threads
+    {
+        Running = false; // flags as not running
+        ActiveThread = null; // marks the thread as null
     }
 }
