@@ -19,7 +19,6 @@
       function callback() { // empty function for reCAPTCHA to callback
       }
       function register() {
-        var captcha_data = grecaptcha.getResponse(); // get captcha response
         if ($('#password').val() == "" || $('#username').val() == "" || $('#password_confirm').val() == "") { // check no fields are empty
           Materialize.toast("Please complete all fields!"); // tell user to complete all fields
         } else {
@@ -27,6 +26,7 @@
           var confirm = $.md5($('#password_confirm').val()); // same for confirmation
           var username = escape($('#username').val()); // escape string, in case someone does try injection
           if (pass == confirm) { // if the passwords match
+            var captcha_data = grecaptcha.getResponse(); // get captcha response
             $.ajax({ // start ajax
               type: "POST", // post
               url: "../api/register.php", // to register endpoint
