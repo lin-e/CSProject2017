@@ -90,10 +90,7 @@ public static class SessionManager // by using a static class we have variables 
                 if (Authenticated) // only runs if the current user is authenticated
                 {
                     dynamic result = Renew(); // renew the session
-                    if ((int)result.status == 0) // if failed to renew
-                    {
-                        Debug.Log("SESSION MANAGER [RENEW]: " + (string)result.content); // log to console
-                    } 
+                    Debug.Log("SESSION MANAGER [RENEW]: " + (string)result.content); // log to console
                 }
                 Thread.Sleep(RenewTime); // delay
             }
