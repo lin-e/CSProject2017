@@ -7,6 +7,7 @@ using UnityEngine;
 public static class SessionManager // by using a static class we have variables that can be accessed from all scenes
 {
     public static string EndPoint = "https://project.eugenel.in/api/";
+    public static int RenewTime = 2000;
     public static WebRequestFactory Factory = new WebRequestFactory(null, new CookieContainer()); // create a new request manager
     public static string Token = ""; // stores the current active token
     public static bool Running = false; // toggles the iteration
@@ -94,7 +95,7 @@ public static class SessionManager // by using a static class we have variables 
                         Debug.Log("SESSION MANAGER [RENEW]: " + (string)result.content); // log to console
                     } 
                 }
-                Thread.Sleep(2000); // delay 2 seconds
+                Thread.Sleep(RenewTime); // delay
             }
         });
         ActiveThread.Start(); // start the thread
