@@ -11,7 +11,8 @@ public static class SessionManager // by using a static class we have variables 
     public static string Token = ""; // stores the current active token
     public static bool Running = false; // toggles the iteration
     public static bool Authenticated = false; // if the user has a valid session
-    public static Thread ActiveThread = null;
+    public static Thread ActiveThread = null; // the current thread used for token renewal
+    public static string[] Credentials = { "", "" }; // stores the login details
     public static dynamic Authenticate(string user, string pass) // method to authenticate the user
     {
         try // attempt to run the code in the child scope
@@ -76,14 +77,23 @@ public static class SessionManager // by using a static class we have variables 
     }
     public static void Start() // runs iterations
     {
+        if (Running) // if the program is already running
+        {
+            return; // don't create a new thread;
+        }
         Running = true; // mark running as true
         ActiveThread = new Thread(() => // create new thread
         {
-            int i = 0; // just a test function to show continuity
             while (Running) // does this while running
             {
-                Debug.Log("SESSION MANAGER: " + i.ToString()); // logs in the console
-                i++; // increments by 1
+                if (Authenticated) // only runs if the current user is authenticated
+                {
+                    dynamic result = Renew(); // renew the session
+                    if ((int)result.status == 0) // if failed to renew
+                    {
+                        Debug.Log("SESSION MANAGER [RENEW]: " + (string)result.content); // log to console
+                    } 
+                }
                 Thread.Sleep(2000); // delay 2 seconds
             }
         });

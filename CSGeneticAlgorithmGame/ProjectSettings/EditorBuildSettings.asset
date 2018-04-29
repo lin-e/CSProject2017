@@ -7,7 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/MainMenu.unity
-    guid: 00000000000000000000000000000000
+    guid: 4c1f725d9e4e3134284f74d50534ad41
+  - enabled: 1
+    path: Assets/LoginMenu.unity
+    guid: 7b6647ca864163d44ab47e2e07e87e4f
   - enabled: 1
     path: Assets/TestSandbox.unity
-    guid: 00000000000000000000000000000000
+    guid: c6f3aed31f1a55c448fc4fff8e2110c2
+  m_configObjects: {}
