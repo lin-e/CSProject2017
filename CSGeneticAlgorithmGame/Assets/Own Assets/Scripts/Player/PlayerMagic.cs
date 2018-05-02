@@ -13,6 +13,10 @@ public class PlayerMagic : MonoBehaviour
     }
     void Update()
     {
+        if (PauseScreen.Paused) // if the game is paused
+        {
+            return; // do not run the rest of the code
+        }
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) // if the mouse is scrolling up
         {
             Active = (Active + 1) % Projectiles.Length; // increment by one, modulo to make sure index is within range

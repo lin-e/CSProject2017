@@ -60,6 +60,10 @@ public class WaterManager : MonoBehaviour
     }
     void Update()
     {
+        if (PauseScreen.Paused) // if the game is paused
+        {
+            return; // do not run the rest of the code
+        }
         if (!childrenCreationComplete) // if it hasn't completed yet
         {
             return; // ignore the rest of this code

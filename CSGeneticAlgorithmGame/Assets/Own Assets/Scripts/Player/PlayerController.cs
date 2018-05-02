@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     public float JumpForce = 6;
     public GroundMode GroundCheckMode = GroundMode.Union;
     public int MultiThreshold = 2;
-    public bool LockCursor = true;
     
     public Text XCoordinate; // the XCoordinate which would be displayed on the minimap
     public Text ZCoordinate; // same as above
@@ -42,10 +41,6 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        if (LockCursor) // prevent the cursor from moving around on screen
-        {
-            Cursor.lockState = CursorLockMode.Locked; // Unity's lock flag
-        }
         if (Input.GetKeyDown(KeyCode.Space)) // check if the space key is pressed (pretty much standard
         {
             if (IsGrounded()) // access the grounding function (only allows jumping if the user is on floor)
