@@ -11,14 +11,18 @@
       if (!isset($data->score)) { // if the score isn't set
         die("{\"status\":0,\"content\":{\"token\":\"$new_token\",\"body\":\"Please provide a score\"}}"); // die with token
         $score_check = $data->score; // take the score from json
-        if (!is_int($score_check)) { // if the token is invalid
+        if (!is_numeric($score_check)) { // if the token is invalid
           die("{\"status\":0,\"content\":{\"token\":\"$new_token\",\"body\":\"Please provide a valid score\"}}"); // die with token
         }
       }
-      $score = strval(intval($data->score)); // get the score as a string
+      $score = intval($data->score); // get the score as a string
+      if ($score <= 0) {
+        die("{\"status\":0,\"content\":{\"token\":\"$new_token\",\"body\":\"Please provide a valid score\"}}"); // die with token
+      }
+      $score_string = strval($score);
       $time = strval(time()); // get the current time as a string
       $username = $result["content"]["username"]; // fetch the username
-      $db->query("INSERT INTO scores (score, username, logtime) VALUES ($score, '$username', $time)") or die("{\"status\":0,\"content\":{\"token\":\"$new_token\",\"body\":\"Failed to insert\"}}"); // tell the user it failed, and provide a token
+      $db->query("INSERT INTO scores (score, username, logtime) VALUES ($score_string, '$username', $time)") or die("{\"status\":0,\"content\":{\"token\":\"$new_token\",\"body\":\"Failed to insert\"}}"); // tell the user it failed, and provide a token
       die("{\"status\":1,\"content\":{\"token\":\"$new_token\",\"body\":\"Score saved\"}}"); // tell the user the score is saved
     } else { // if failed
       $content = $result["content"]; // set the content to be the validation content
