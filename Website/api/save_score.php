@@ -10,7 +10,8 @@
       $new_token = $result["content"]["token"]; // create a new token
       if (!isset($data->score)) { // if the score isn't set
         die("{\"status\":0,\"content\":{\"token\":\"$new_token\",\"body\":\"Please provide a score\"}}"); // die with token
-        if (!is_int($data->score)) { // if the token is invalid
+        $score_check = $data->score; // take the score from json
+        if (!is_int($score_check)) { // if the token is invalid
           die("{\"status\":0,\"content\":{\"token\":\"$new_token\",\"body\":\"Please provide a valid score\"}}"); // die with token
         }
       }
