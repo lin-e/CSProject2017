@@ -7,7 +7,7 @@
     $token = $data->token; // extract the token from the input json
     $result = validate_token($token); // validate the token from the master function
     if ($result["status"] == 1) { // if the result is a success
-      $new_token = $result["content"]; // create a new token
+      $new_token = $result["content"]["token"]; // create a new token
       die("{\"status\":1,\"content\":\"$new_token\"}"); // die with the new content
     } else { // if failed
       $content = $result["content"]; // set the content to be the validation content

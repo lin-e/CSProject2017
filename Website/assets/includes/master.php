@@ -96,7 +96,9 @@
             $generated = create_token($username, "TOKEN_RENEWAL") or $flag = false; // generate a new token or error out
             if ($flag) {
               $return_val["status"] = 1; // mark as success
-              $return_val["content"] = $generated; // set the return content as the token
+              $return_val["content"] = array(); // create an array for the return content
+              $return_val["content"]["token"] = $generated; // set the token field to be the generated token
+              $return_val["content"]["username"] = $username; // also return the username
             }
           }
           return $return_val;
