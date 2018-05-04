@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/OptionsMenu.unity
     guid: 9feecd7d96cc5f54d8220d06fc03761a
   - enabled: 1
+    path: Assets/LightingMenu.unity
+    guid: 9152c3ac599efd049825cd74357eae61
+  - enabled: 1
     path: Assets/TestSandbox.unity
     guid: c6f3aed31f1a55c448fc4fff8e2110c2
   m_configObjects: {}

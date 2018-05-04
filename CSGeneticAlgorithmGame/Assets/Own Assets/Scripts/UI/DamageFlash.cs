@@ -28,13 +28,13 @@ public class DamageFlash : MonoBehaviour
                 GetComponent<Image>().color = Color.clear; // clears the flash so that it is no longer visible
                 lerping = false; // stops lerping
                 currentTime = 0; // resets current time
-                LIFXLan.ChangeColour("FFFFFF", 96); // resets the colour to white
+                LIFXManager.ChangeColour("FFFFFF", 96); // resets the colour to white
             }
         }
     }
     public void Flash() // public method to access damage flash
     {
         damaged = true; // sets to damaged so that it will activate on the next update
-        LIFXLan.ChangeColour(ColorUtility.ToHtmlStringRGB(Colour), 48); // smart lighting integration - will flash the selected lights whatever colour is specified in the damage flash
+        LIFXManager.ChangeColour(ColorUtility.ToHtmlStringRGB(Colour), 48); // smart lighting integration - will flash the selected lights whatever colour is specified in the damage flash
     }
 }
