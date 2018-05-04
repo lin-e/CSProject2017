@@ -78,7 +78,6 @@ public class LIFXManager : MonoBehaviour
                 enabled.Add(b.Bulb); // add it to the list
             }
         }
-        Debug.Log(enabled.Count);
         LIFXLan.ChangeColour(hex, time, enabled.ToArray()); // change the colour of the enabled bulbs
     }
 }
