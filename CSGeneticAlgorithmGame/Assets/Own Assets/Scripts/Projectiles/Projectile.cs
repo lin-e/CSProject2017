@@ -18,8 +18,8 @@ public class Projectile : MonoBehaviour
     {
         if (SmartLightEffect)
         {
-            LIFXLan.ChangeColour(ColorUtility.ToHtmlStringRGB(SmartLightColour), 48); // immersive effect changing environment colour
-            Wait(48, () => { LIFXLan.ChangeColour("FFFFFF", SmartLightFade); }); // lambda expression because it doesn't deserve a method
+            LIFXManager.ChangeColour(ColorUtility.ToHtmlStringRGB(SmartLightColour), 48); // immersive effect changing environment colour
+            Wait(48, () => { LIFXManager.ChangeColour("FFFFFF", SmartLightFade); }); // lambda expression because it doesn't deserve a method
         }
         Destroy(gameObject, 120f); // automatically delete object after 2 minutes to prevent slowing down the game
     }
