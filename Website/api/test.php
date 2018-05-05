@@ -7,5 +7,4 @@
   $result->execute();
   $row = $result->fetch(PDO::FETCH_ASSOC);
   echo $row["passhash"];
-  var_dump($result->fetch(PDO::FETCH_ASSOC));
 ?>

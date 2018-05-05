@@ -14,6 +14,13 @@
       "fa":"user",
       "link":"https://project.eugenel.in/register",
       "hide":false
+    },
+    {
+      "name":"Register",
+      "cwd":"/var/www/project/Website/leaderboard",
+      "fa":"trophy",
+      "link":"https://project.eugenel.in/leaderboard",
+      "hide":false
     }
   ]
 }
