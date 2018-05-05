@@ -5,6 +5,8 @@
   $uname = 'authtest';
   $result->bindParam(':username', $uname);
   $result->execute();
+  $rows = $result->fetch(PDO::FETCH_NUM);
+  echo strval($rows);
   $row = $result->fetch(PDO::FETCH_ASSOC);
   echo $row["passhash"];
 ?>
