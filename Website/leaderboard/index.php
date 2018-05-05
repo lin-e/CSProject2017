@@ -6,7 +6,7 @@
     <noscript>
       <meta HTTP-EQUIV="REFRESH" content="0; url=https://eugenel.in/noscript">
     </noscript>
-    <title>Register - <?php echo $site_title; ?></title>
+    <title>Leaderboard - <?php echo $site_title; ?></title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../assets/css/materialize.css?<?php if ($reload_assets) { echo time(); } ?>"  media="screen,projection">
     <link type="text/css" rel="stylesheet" href="../assets/css/main.css?<?php if ($reload_assets) { echo time(); } ?>">
@@ -16,41 +16,6 @@
     <script src="../assets/js/materialize.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
     <script src="../assets/js/jquery.md5.js?<?php if ($reload_assets) { echo time(); } ?>"></script>
     <script>
-      function callback() { // empty function for reCAPTCHA to callback
-      }
-      function register() {
-        var captcha_data = grecaptcha.getResponse(); // get captcha response
-        if ($('#password').val() == "" || $('#username').val() == "" || $('#password_confirm').val() == "") { // check no fields are empty
-          Materialize.toast("Please complete all fields!"); // tell user to complete all fields
-          grecaptcha.reset(); // reset
-        } else {
-          var pass = $.md5($('#password').val()); // get password hash
-          var confirm = $.md5($('#password_confirm').val()); // same for confirmation
-          var username = escape($('#username').val()); // escape string, in case someone does try injection
-          if (pass == confirm) { // if the passwords match
-            $.ajax({ // start ajax
-              type: "POST", // post
-              url: "../api/register.php", // to register endpoint
-              data: "data={\"username\":\"" + escape($('#username').val()) + "\",\"md5\":\"" + pass + "\",\"captcha\":\"" + captcha_data + "\"}", // create json
-              success: function(data) { // on success
-                var obj = JSON.parse(data); // parse to object
-                if (obj.status == 1) { // if success
-                  Materialize.toast("Registration complete!"); // notify the user
-                  var button = $('#register'); // get the actual element
-                  button.addClass('disabled'); // add a class
-                  button.html('Registered'); // change text
-                } else {
-                  Materialize.toast("Error: " + obj.content); // tell the user the error
-                  grecaptcha.reset(); // reset
-                }
-              }
-            });
-          } else {
-            Materialize.toast("Password and confirmation don't match!"); // notify user
-            grecaptcha.reset(); // reset
-          }
-        }
-      }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
@@ -114,34 +79,7 @@
     </nav>
     <main class="white-text">
       <div class="container">
-        <h4>Register for an Account</h4>
-        <div class="row">
-          <form class="col s12">
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="username" type="text">
-                <label for="username">Username (4-32 characters, only alphanumeric, dot, dash, and underscore are permitted</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="password" type="password">
-                <label for="password">Password</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="password_confirm" type="password">
-                <label for="password_confrim">Confirm Password</label>
-              </div>
-            </div>
-            <div class="row">
-              <center>
-                <button id="register" class="g-recaptcha waves-effect waves-dark btn-large light-blue darken-2" data-sitekey="6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_" data-callback="register" style="min-width: 98%">Register</button>
-              </center>
-            </div>
-          </form>
-        </div>
+        <h4>Leaderboards</h4>
       </div>
     </main>
     <footer class="page-footer">
