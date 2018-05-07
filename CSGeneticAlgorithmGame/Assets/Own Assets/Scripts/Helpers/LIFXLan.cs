@@ -189,6 +189,10 @@ public class LIFXLan // actual manager class
         }
         double[] hsv = RGBtoHSV(result); // converts to HSV for LIFX protocol
         byte[] payload = ConstructColourPayload(hsv, time); // creates the byte payload
+        if (actualTargets == null) // if the list is empty
+        {
+            return false; // return with error
+        }
         foreach (LIFXBulb target in actualTargets) // broadcast to each bulb
         {
             new Thread(() => // spawn new thread for each bulb

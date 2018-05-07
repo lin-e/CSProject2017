@@ -28,7 +28,10 @@ public class DamageFlash : MonoBehaviour
                 GetComponent<Image>().color = Color.clear; // clears the flash so that it is no longer visible
                 lerping = false; // stops lerping
                 currentTime = 0; // resets current time
-                LIFXManager.ChangeColour("FFFFFF", 96); // resets the colour to white
+                if (!PauseScreen.Paused) // only run this code if pause screen isn't active (fix for death event)
+                {
+                    LIFXManager.ChangeColour("FFFFFF", 96); // resets the colour to white
+                }
             }
         }
     }

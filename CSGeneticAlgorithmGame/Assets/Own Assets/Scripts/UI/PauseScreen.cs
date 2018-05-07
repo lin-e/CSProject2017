@@ -10,12 +10,13 @@ public class PauseScreen : MonoBehaviour
     GameObject panel; // stores the panel
     void Start()
     {
+        Paused = false; // reset paused state
         panel = gameObject.transform.GetChild(0).gameObject; // gets the only child of this component (which should be the ui)
         panel.SetActive(false); // hide it on start
     }
     void Update() // runs each frame
     {
-        if (Paused) // if the game is currently paused
+        if (Paused) // if the game is currently paused or the player is dead
         {
             Cursor.lockState = CursorLockMode.None; // unlock cursor so user can interact with UI
         }

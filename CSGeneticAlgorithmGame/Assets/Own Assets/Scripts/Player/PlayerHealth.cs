@@ -169,6 +169,7 @@ public class PlayerHealth : MonoBehaviour
     void Die() // death routine
     {
         Alive = false; // set alive to false
+        FindObjectOfType<EventManager>().Die(); // tell tthe event manager that the player has died
         manager.GetComponent<NotificationManager>().SetBottomText("You died!"); // alert the player through the text displayed at the bottom telling them they've died
     }
 }

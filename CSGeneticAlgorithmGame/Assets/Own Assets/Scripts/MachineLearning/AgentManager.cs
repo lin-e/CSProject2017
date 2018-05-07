@@ -15,12 +15,19 @@ public class AgentManager : MonoBehaviour
     public float MotionMultiplier = 12f;
     public float CureChance = 0.00001f;
     public float InfectionChance = 0.00001f;
+    public int SpawnHeight = 20;
+    public int SpawnSpread = 100;
+
+    // we are now working in 3 dimensions, so we have to restrict movement in an axis
+    public float YLimit = 30f;
+    public float YLimitForce = 10f;
+    public float DownwardsBias = 1f;
 
     // these variables are ported from the javascript version of the code
     public static float AttractionMin = -1f;
     public static float AttractionMax = 1f;
     public static float ViewMin = 0f;
-    public static float ViewMax = 500f;
+    public static float ViewMax = 150f;
     public static float MutationChance = 0.0001f;
 
     List<GameObject> Agents = new List<GameObject>(); // holds all the agents (we will do all the updates from here instead of from the agents)
@@ -31,15 +38,21 @@ public class AgentManager : MonoBehaviour
         {
             GameObject created = Instantiate(Agent); // create the object
             created.transform.parent = gameObject.transform; // set the new agent as a child of this object
-            created.transform.position = new Vector3(Generator.Next(-30, 30), 20, Generator.Next(-30, 30));
+            created.transform.position = new Vector3(Generator.Next(-SpawnSpread, SpawnSpread), SpawnHeight, Generator.Next(-SpawnSpread, SpawnSpread)); // spread the locations of the entities
             Agents.Add(created); // add to list
         }
     }
     void Update()
     {
-        foreach (GameObject a in Agents)
+        if (PauseScreen.Paused) // if the game is paused
         {
-            a.GetComponent<Agents>().Calculate();
+            return; // ignore the rest of this code
+        }
+        foreach (GameObject a in Agents) // iterates through each agent
+        {
+            Agents agent = a.GetComponent<Agents>(); // gets the component
+            agent.Calculate(); // runs calculations to update the entity
+            agent.UpdateTransform(); // applies transformations
         }
     }
 }

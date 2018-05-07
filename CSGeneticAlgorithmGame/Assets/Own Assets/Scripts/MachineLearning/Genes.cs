@@ -10,7 +10,7 @@
         DNA = new float[4]; // declare the new array
         DNA[0] = AgentManager.Generator.NextFloat(AgentManager.AttractionMin, AgentManager.AttractionMax); // attraction multiplier for the player
         DNA[1] = AgentManager.Generator.NextFloat(AgentManager.ViewMin, AgentManager.ViewMax); // the view range for the target
-        DNA[2] = AgentManager.Generator.NextFloat(AgentManager.AttractionMin, AgentManager.AttractionMax); // attraction multiplier for targets
+        DNA[2] = AgentManager.Generator.NextFloat(AgentManager.AttractionMin, AgentManager.AttractionMax) * 4; // attraction multiplier for targets
         DNA[3] = AgentManager.Generator.NextFloat(AgentManager.ViewMin, AgentManager.ViewMax); // view range for targets
     }
     public Genes Mix(Genes other)

@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
     public bool SmartLightEffect = false;
     public Color SmartLightColour = new Color(0, 0, 0, 0.1f);
     public int SmartLightFade = 1000;
-    bool destroyed = false;
+    public bool Destroyed = false;
 
     void Start()
     {
@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     }
     void OnCollisionEnter(Collision col)
     {
-        if (destroyed)
+        if (Destroyed)
         {
             return; // do not trigger if it has already collided
         }
@@ -43,7 +43,7 @@ public class Projectile : MonoBehaviour
             {
                 light.intensity = 0; // deletes it
             }
-            destroyed = true;  // marks it as deleted
+            Destroyed = true;  // marks it as deleted
             Destroy(gameObject, 5f); // destroys self after 5 seconds, to allow for any particles to finish
         }
     }
