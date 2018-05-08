@@ -44,7 +44,7 @@
                 $(caller).parent().addClass("active"); // set the parent as active
               }
             }
-            $("#holder").append("<table><tr><th>Username</th><th>Score</th><th>Date</th></tr>"); // set the heading
+            $("#holder").append("<table white-text><tr><th>Username</th><th>Score</th><th>Date</th></tr>"); // set the heading
             $.each(obj.content.entries, function(index, value) { // iterate through each item
               var entryHtml = "<tr>";
               entryHtml += "<td>" + value.username + "</td>";
