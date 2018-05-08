@@ -69,6 +69,5 @@ public class AgentManager : MonoBehaviour
                 Destroy(g); // destroy the object
             }
         }
-        Debug.Log(transform.childCount.ToString());
     }
 }

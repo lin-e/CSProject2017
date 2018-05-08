@@ -33,10 +33,6 @@ public class EventManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Win();
-        }
         int delta = (int)Math.Round((DateTime.UtcNow - start).TotalSeconds); // calculate the time difference in seconds
         GetComponent<NotificationManager>().SetBottomText("Current time: " + delta.ToString() + " seconds"); // update the current time
     }

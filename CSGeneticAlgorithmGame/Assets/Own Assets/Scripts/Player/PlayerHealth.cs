@@ -72,23 +72,6 @@ public class PlayerHealth : MonoBehaviour
     }
     void Update()
     {
-        // TODO: REMOVE THESE DEBUGGING FUNCTIONS
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            DecreaseHealth(10);
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            IncreaseHealth(10);
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            DecreaseEnergy(10);
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            IncreaseEnergy(10);
-        }
         if (CurrentHealth <= 0f && Alive) // check that the player is alive, and run the death routine if the health is at or below 0
         {
             Die();
