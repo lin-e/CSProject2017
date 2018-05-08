@@ -38,13 +38,13 @@
           success: function(data) {
             var obj = JSON.parse(data); // parse to object, this is why I use json over xml
             if (obj.status == 1) { // if success
-              $("#holder").remove(); // clear the table
+              $("#holder table").remove(); // clear the table
               if (caller != null) { // if called from an actual click event
                 $(".pagination .active").removeClass("active"); // remove active marker
                 $(caller).parent().addClass("active"); // set the parent as active
               }
             }
-            $("#holder").append("<tr><th>Username</th><th>Score</th><th>Date</th></tr>"); // set the heading
+            $("#holder").append("<table><tr><th>Username</th><th>Score</th><th>Date</th></tr>"); // set the heading
             $.each(obj.content.entries, function(index, value) { // iterate through each item
               var entryHtml = "<tr>";
               entryHtml += "<td>" + value.username + "</td>";
@@ -53,6 +53,7 @@
               entryHtml += "</tr>"; // build table row
               $("#holder").append(entryHtml); // add to table
             });
+            $("#holder").append("</table>"); // close the table
           }
         })
       }
