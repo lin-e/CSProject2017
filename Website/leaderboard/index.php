@@ -28,7 +28,34 @@
         setTimeout(function() {
           $('.preloader').fadeOut(1000, 'swing', function(){});
         }, 500);
+        loadEntries('1'); // load  the first entries
       });
+      function loadEntries(index, caller) {
+        $.ajax({ // standard ajax setup
+          type: "GET",
+          url: "../api/fetch_scores.php",
+          data: "index=" + index,
+          success: function(data) {
+            var obj = JSON.parse(data); // parse to object, this is why I use json over xml
+            if (obj.status == 1) { // if success
+              $("#holder").remove(); // clear the table
+              if (caller != null) { // if called from an actual click event
+                $(".pagination .active").removeClass("active"); // remove active marker
+                $(caller).parent().addClass("active"); // set the parent as active
+              }
+            }
+            $("#holder").append("<tr><th>Username</th><th>Score</th><th>Date</th></tr>"); // set the heading
+            $.each(obj.content.entries, function(index, value) { // iterate through each item
+              var entryHtml = "<tr>";
+              entryHtml += "<td>" + value.username + "</td>";
+              entryHtml += "<td>" + value.score + "</td>";
+              entryHtml += "<td>" + value.time + "</td>";
+              entryHtml += "</tr>"; // build table row
+              $("#holder").append(entryHtml); // add to table
+            });
+          }
+        })
+      }
     </script>
     <div class="preloader">
     </div>
@@ -80,6 +107,26 @@
     <main class="white-text">
       <div class="container">
         <h4>Leaderboards</h4>
+        <table id="holder" style="width:100%">
+        </table>
+        <ul class="pagination">
+<?php
+  $pagination_padding = "          "; // the preset padding
+  $entry_result = $db->query("SELECT * FROM scores"); // fetch all rows from the database
+  $entry_count = mysqli_num_rows($entry_result); // get the number of rows
+  $page_count = ceil($entry_count / $entries_per_page); // get the number of pages to display all entries
+  if ($page_count > $max_pages) { // if there are more pages than the maximum
+    $page_count = $max_pages; // limit the page number so as to not fill up the page
+  }
+  for ($i = 1; $i <= $page_count; $i++) { // notice the modified for loop to allow for 1-indexed numbers
+    echo $pagination_padding."<li class=\"waves-effect";
+    if ($i == 1) { // if it's the first one
+      echo " active"; // mark as active
+    }
+    echo "\"><a onclick=\"loadEntries('".strval($i)."', this)\">".strval($i)."</a></li>\n"; // fill with index
+  }
+?>
+        </ul>
       </div>
     </main>
     <footer class="page-footer">
