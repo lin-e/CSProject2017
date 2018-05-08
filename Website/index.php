@@ -81,6 +81,7 @@
         <h4>Homepage</h4>
         <h5>"COMING SOON&trade;"</h5>
         <div class="divider"></div>
+        <br>
         <div class="row">
           <a href="https://github.com/lin-e/CSProject2017/blob/master/Builds/Beta.rar"><button class="g-recaptcha waves-effect waves-dark btn-large light-blue darken-2" style="min-width: 98%">Download</button></a>
         </div>
