@@ -15,6 +15,8 @@
   // SITE SETTINGS
   $reload_assets = false; // whether the assets should be forced to reload
   $site_title = 'project.eugenel.in'; // the title for the site
+  $entries_per_page = 10; // the number of leaderboard entries per page
+  $max_pages = 5; // the maximum number of pages
 
   // GOOGLE KEYS
   $google_site_key = '6LfV2lQUAAAAAJPi7mnk6Vr0RmM911ORKyw1xw0_'; // google recaptcha site key
