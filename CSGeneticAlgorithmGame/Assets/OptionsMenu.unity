@@ -550,6 +550,7 @@ GameObject:
   - component: {fileID: 560324168}
   - component: {fileID: 560324167}
   - component: {fileID: 560324166}
+  - component: {fileID: 560324165}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -557,6 +558,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &560324165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 560324164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9586980e8425c3445baff503d874de59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &560324166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,7 +717,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: VISIT WEBSITE
 --- !u!222 &571751755
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1352,7 +1364,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3
+  m_Text: QUIT
 --- !u!222 &1927766140
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1373,7 +1385,7 @@ GameObject:
   - component: {fileID: 2050965197}
   - component: {fileID: 2050965196}
   m_Layer: 5
-  m_Name: Placeholder 3
+  m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1452,8 +1464,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
+      - m_Target: {fileID: 560324165}
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1587,7 +1599,7 @@ GameObject:
   - component: {fileID: 2133481101}
   - component: {fileID: 2133481100}
   m_Layer: 5
-  m_Name: Placeholder 2
+  m_Name: WebsiteButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1666,8 +1678,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
+      - m_Target: {fileID: 560324165}
+        m_MethodName: WebsiteClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

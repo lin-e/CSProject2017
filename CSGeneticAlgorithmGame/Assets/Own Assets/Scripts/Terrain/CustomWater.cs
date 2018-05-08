@@ -51,4 +51,13 @@ public class CustomWater : MonoBehaviour
             vertices[i] = vector; // set vector
         }
     }
+    void OnTriggerEnter(Collider other) // triggers when something touches the water
+    {
+        GameObject obj = other.gameObject; // the object
+        if (obj.GetComponent<PlayerHealth>() != null) // if its the player
+        {
+            obj.GetComponent<PlayerHealth>().DecreaseHealth(60f); // decreasae health by 60
+            obj.GetComponent<PlayerHealth>().DecreaseEnergy(25f); // decrease energy by 25
+        }
+    }
 }
