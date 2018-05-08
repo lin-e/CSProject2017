@@ -21,6 +21,13 @@
       "fa":"trophy",
       "link":"https://project.eugenel.in/leaderboard",
       "hide":false
+    },
+    {
+      "name":"FAQ",
+      "cwd":"/var/www/project/Website/faq",
+      "fa":"question",
+      "link":"https://project.eugenel.in/faq",
+      "hide":false
     }
   ]
 }
