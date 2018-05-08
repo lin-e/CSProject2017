@@ -17,6 +17,8 @@ public class AgentManager : MonoBehaviour
     public float InfectionChance = 0.00001f;
     public int SpawnHeight = 20;
     public int SpawnSpread = 100;
+    public int CenterX = -380;
+    public int CenterZ = -380;
 
     // we are now working in 3 dimensions, so we have to restrict movement in an axis
     public float YLimit = 30f;
@@ -38,7 +40,7 @@ public class AgentManager : MonoBehaviour
         {
             GameObject created = Instantiate(Agent); // create the object
             created.transform.parent = gameObject.transform; // set the new agent as a child of this object
-            created.transform.position = new Vector3(Generator.Next(-SpawnSpread, SpawnSpread), SpawnHeight, Generator.Next(-SpawnSpread, SpawnSpread)); // spread the locations of the entities
+            created.transform.position = new Vector3(CenterX + Generator.Next(-SpawnSpread, SpawnSpread), SpawnHeight, CenterZ + Generator.Next(-SpawnSpread, SpawnSpread)); // spread the locations of the entities
             Agents.Add(created); // add to list
         }
     }

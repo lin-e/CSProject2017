@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Threading;
 using System.Linq;
 
 // note that this acts as the main terrain generator
@@ -29,6 +28,7 @@ public class MazeMesh : MonoBehaviour
         Debug.Log("DEBUG: Populating environment with dead trees");
         PopulateDeadTrees(); // create trees
         Debug.Log("DEBUG: Terrain generation complete");
+        FindObjectOfType<EventManager>().StartTimer(); // start the timer
     }
     public void PopulateDeadTrees() // creates all the trees (instantiate the prefab which then generates trees)
     {
