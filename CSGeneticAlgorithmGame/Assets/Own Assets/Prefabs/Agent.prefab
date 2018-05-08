@@ -97,12 +97,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Manager: {fileID: 0}
-  Health: 100
+  Health: 2000
   Velocity: {x: 0, y: 0, z: 0}
   Acceleration: {x: 0, y: 0, z: 0}
   Alive: 1
   Infected: 0
   PlayerDamageOnHit: 2
+  HealthGainOnHit: 5
 --- !u!136 &136766853955148502
 CapsuleCollider:
   m_ObjectHideFlags: 1

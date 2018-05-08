@@ -32,8 +32,6 @@ public class AgentManager : MonoBehaviour
     public static float ViewMax = 150f;
     public static float MutationChance = 0.0001f;
 
-    List<GameObject> Agents = new List<GameObject>(); // holds all the agents (we will do all the updates from here instead of from the agents)
-
     void Start()
     {
         for (int i = 0; i < InitialPopulation; i++) // do this for each agent
@@ -41,7 +39,6 @@ public class AgentManager : MonoBehaviour
             GameObject created = Instantiate(Agent); // create the object
             created.transform.parent = gameObject.transform; // set the new agent as a child of this object
             created.transform.position = new Vector3(CenterX + Generator.Next(-SpawnSpread, SpawnSpread), SpawnHeight, CenterZ + Generator.Next(-SpawnSpread, SpawnSpread)); // spread the locations of the entities
-            Agents.Add(created); // add to list
         }
     }
     void Update()
@@ -50,11 +47,28 @@ public class AgentManager : MonoBehaviour
         {
             return; // ignore the rest of this code
         }
-        foreach (GameObject a in Agents) // iterates through each agent
+        foreach (Transform t in gameObject.transform) // iterates through each agent
         {
-            Agents agent = a.GetComponent<Agents>(); // gets the component
-            agent.Calculate(); // runs calculations to update the entity
-            agent.UpdateTransform(); // applies transformations
+            GameObject g = t.gameObject; // get the object related to the child
+            if (g.GetComponent<Agents>() == null) // if it doesn't have the component for some reason
+            {
+                continue; // skip
+            }
+            Agents agent = g.GetComponent<Agents>(); // gets the component
+            if (!agent.Alive) // ignore if agent is dead
+            {
+                continue; // skip
+            }
+            if (agent.Calculate()) // runs calculations to update the entity
+            {
+                agent.UpdateTransform(); // applies transformations
+                agent.Reproduce(); // run reproduction and disease routine
+            }
+            else // if the agent dies in this update
+            {
+                Destroy(g); // destroy the object
+            }
         }
+        Debug.Log(transform.childCount.ToString());
     }
 }

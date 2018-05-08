@@ -4,12 +4,13 @@ public class Agents : MonoBehaviour
 {
     public AgentManager Manager; // stores the manager
     public Genes Genes; // stores the genes of this entity
-    public int Health = 100; // default starting health
+    public int Health = 2000; // default starting health
     public Vector3 Velocity; // velocity component
     public Vector3 Acceleration; // same with acceleration
     public bool Alive = true; // flag for whether the entity is active or not
     public bool Infected = false; // same flag but for disease
     public float PlayerDamageOnHit = 2f; // damage the agent should do to the player
+    public int HealthGainOnHit = 5; // the amount of health the agent should gain if it hits the player
     void Start()
     {
         Manager = transform.parent.gameObject.GetComponent<AgentManager>(); // get the manager by finding transform parent
@@ -28,18 +29,43 @@ public class Agents : MonoBehaviour
         {
             PlayerHealth player = collided.GetComponent<PlayerHealth>(); // get a reference to the script
             player.DecreaseHealth(PlayerDamageOnHit); // decrease the health by some amount
+            Health += HealthGainOnHit; // increase the health of the entity on hit
+        }
+        if (collided.GetComponent<Projectile>() != null) // if the object collides with a projectile
+        {
+            Alive = false; // flag as dead
+            Destroy(gameObject); // simply destroy the object
         }
     }
     public bool Calculate() // runs on each update to calculate
     {
+        if (!Alive) // if the entity is somehow dead before the update
+        {
+            return false; // mark as dead
+        }
         Vector3 target = Manager.Target.transform.position; // gets the position vector of the player
+        if (Infected) // if the entity is infected
+        {
+            Health -= 2; // reduce the health by 2
+        }
         if (Vector3.Distance(target, transform.position) > Manager.SafeDiameter) // if the agent isn't close enough to the target
         {
             Health--; // decrease the health of the agent
+            foreach (Transform projectile in Manager.Projectiles.transform) // iterate through each child projectile
+            {
+                if (projectile.gameObject.GetComponent<Projectile>().Destroyed) // if the projectile is destroyed
+                {
+                    continue; // skip it
+                }
+                if (Vector3.Distance(projectile.position, transform.position) < Manager.ObstacleRadius) // if the entity is within a certain radius of the projectile
+                {
+                    Health -= 5; // decrease the health by 5
+                }
+            }
         }
         else
         {
-            Health += 2; // increase the health to reward good genes
+            Health += 1; // increase the health to reward good genes
         }
         if (Health < 0) // if the health is negative
         {
@@ -86,6 +112,53 @@ public class Agents : MonoBehaviour
         Velocity = Velocity * 0.999f; // small dampening force
         transform.position = transform.position + Velocity; // move the agent in space
         return true; // tell the manager that the agent is alive
+    }
+    public void Reproduce()
+    {
+        float diseaseRoll = AgentManager.Generator.NextFloat(0, 1); // the disease roll
+        if ((!Infected && diseaseRoll < Manager.InfectionChance) || (Infected && diseaseRoll < Manager.CureChance)) // does check depending on current infection state
+        {
+            Infected = !Infected; // toggles infection
+        }
+        if (AgentManager.Generator.NextFloat(0, 1) < Manager.ReproduceChance) // if the generator rolls something lower than the chance; then it should run the code
+        {
+            int count = Manager.transform.childCount; // get the number of children
+            Agents partner = null; // hold the current partner, use null as placeholder
+            for (int i = 0; i < 5; i++) // have max 5 attempts to prevent locking
+            {
+                GameObject obj = Manager.transform.GetChild(AgentManager.Generator.Next(0, count)).gameObject; // pick a random child component
+                if (obj.GetComponent<Agents>() != null) // if its an entity
+                {
+                    Agents temp = obj.GetComponent<Agents>(); // set the temp partner to be the entity
+                    if (temp.Alive) // if the possible partner is alive
+                    {
+                        partner = temp; // set the partner
+                        break; // exit the iteration
+                    }
+                }
+            }
+            if (partner != null) // if a partner was found
+            {
+                if (partner.Infected || Infected) // if either party is infected
+                {
+                    partner.Infected = true; // set both to be infected to spread the disease
+                    Infected = true;
+                }
+                else
+                {
+                    Vector3 spawnLocation = new Vector3(
+                        gameObject.transform.position.x + AgentManager.Generator.NextFloat(-15, 15),
+                        gameObject.transform.position.y + AgentManager.Generator.NextFloat(-15, 15),
+                        gameObject.transform.position.z + AgentManager.Generator.NextFloat(-15, 15)
+                        ); // create a new location vector close to this parent
+                    Genes newGenes = Genes.Mix(partner.Genes); // use the gene mixing code to create a new child
+                    GameObject created = Instantiate(Manager.Agent); // create the object
+                    created.transform.parent = gameObject.transform.parent; // set the new agent as a child of this object's parent, so that the new object is a sibling
+                    created.transform.position = spawnLocation; // set the location to be the one created earlier
+                    created.GetComponent<Agents>().Overwrite(newGenes); // replace the random genes with the mixed genes
+                }
+            }
+        }
     }
     public void UpdateTransform() // change the transform (rotation etc)
     {
